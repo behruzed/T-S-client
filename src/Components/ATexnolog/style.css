@@ -1,0 +1,465 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.bread{
+    background-color: rgb(235, 235, 255);
+    padding: 12px;
+    margin: 0px !important;
+    font-size: 24px;
+
+}
+.wer:hover{
+    background-color: red;
+}
+.infoimg{
+    text-align: center;
+}
+.infoimg img{
+    text-align: center;
+    width: 20rem;
+}
+.obnovit{
+    justify-content: end;
+    align-items: center;
+}
+.obnovitbutton{
+    margin-left: 5px;
+    background-color: rgb(44, 44, 184);
+    color: #fff;
+    padding: 1px 20px;
+    border-radius: 2px;
+}
+.owner{
+    justify-content: end;
+}
+.marqu{
+    position: fixed;
+    bottom: 0px;
+    background-color: none !important;
+    padding: none !important;
+    margin: none !important;
+}
+.owner a button{
+    margin-left: 5px;
+    background-color: rgb(44, 44, 184);
+    color: #fff;
+    padding: 1px 20px;
+    border-radius: 2px;
+}
+.bread a{
+    color: rgb(141, 107, 107);
+}
+.myprf{
+    font-size: 200rem !important;
+}
+
+
+.qwa{
+    border-radius: 5px;
+    background: linear-gradient(145deg, #f0f0f0, #cacaca);
+    box-shadow:  11px 11px 16px #bebebe,
+             -11px -11px 16px #ffffff;
+                 transition: .1s;
+
+}
+.qwa:hover{
+    transform: scale(.98);
+    border-radius: 5px;
+    background: #e0e0e0;
+    box-shadow: inset 9px 9px 16px #cacaca,
+                inset -9px -9px 16px #f6f6f6;
+}
+.h11{
+    font-size: 2.5rem !important;
+    margin-top: 5px;
+    margin-left: 8px;
+}
+.moyul{
+    margin: 20px;
+    width: 50%;
+}
+.moyli{
+    padding: 5px;
+    font-size: 1.5rem;
+    margin: 9px;
+}
+.moylidiz{
+    transition: .1s;
+    border-radius: 7px;
+background: #e0e0e0;
+box-shadow: inset 5px 5px 10px #b8b8b8,
+            inset -5px -5px 10px #ffffff;
+}
+.moylidiz:hover{
+    transform: translate(3px, -3px);
+box-shadow:  -1px 1px 5px gray;
+}
+.shabloncol{
+    display: flex;
+    margin: 8px;
+    text-align: center;
+    font-size: 30px;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 150px;
+}
+.shabloncol div{
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.mainrow{
+    width: 100%;
+}
+.chapbuttons{
+    margin-top: 20px;
+}
+.chapbutton{
+    padding-left: 20px !important;
+    text-align: start;
+    width: 100%;
+    display: block;
+    padding: 7px;
+    transition: all .1s ease-out;
+}
+.hovred:hover{
+    background-color: rgb(184, 0, 0) !important;
+}
+.chapbutton:hover{
+    box-shadow: -3px 3px 2px gray;
+    background-color: rgb(4, 4, 95);
+    color: white;
+    transform: translate(3px, -3px);
+}
+.chapbutton:active{
+    transform: translate(-3px, 3px);
+}
+
+
+.chap {
+    padding-right: 0px !important;
+    padding-top: 10px;
+    height: 100vh;
+    position: fixed;
+    z-index: 3;
+    background-color: rgb(233, 233, 233);
+}
+@media (max-width: 768px) {
+    .chap{
+        display: none;
+    }
+  }
+.chap .rasm a{
+    display: flex; /* Add this line */
+    /* text-align: center; */
+    justify-content: center; /* Add this line */
+
+}
+.chap .rasm > a img {
+    width: 8rem;
+}
+.rightrow{
+    display: flex !important;
+    margin-top: 10rem;
+    text-align: c;
+}
+.rightrow div{
+    padding: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  .mainimg img:hover{
+    transform: scale(1.02);
+    box-shadow: 0px 0px 18px green;
+  }
+  .mainimg a{
+    text-align: center;
+    padding: none !important;
+  }
+  .mainimg img {
+    padding: 10px;
+    border-radius: 20px;
+    transition: all .2s ease-out;
+    border: 1px solid rgb(9, 9, 110);
+    padding: none;
+    width: 15rem;
+    height: 15rem;
+  }
+  .mainimg img:active{
+    transform: scale(1);
+  }
+.ong{
+    padding: 0px;
+    height: auto;
+}
+
+.btn {
+    border: none;
+    outline: none;
+    padding: 10px 16px;
+    background-color: #d3d3d3;
+    cursor: pointer;
+    font-size: 18px;
+  }
+.admin {
+    position: relative;
+}
+.createdbywasad{
+    position: fixed;
+    bottom: 11px;
+    right: 10px;
+    transition: .1s ease-out;
+}
+.createdbywasad h5{
+    text-align: center;
+}
+.createdbywasad img{
+    width: 100px;
+}
+.createdbywasad:hover{
+    transform: scale(1.05);
+}
+.admin>#dropdown {
+    position: absolute;
+    top: 100%;
+    right: 2%;
+}
+
+
+.student1>#dropdown {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+}
+
+.teacher {
+    position: relative;
+}
+
+.teacher>#dropdown {
+    position: absolute;
+    top: 100%;
+    right: 2%;
+}
+
+.forBtn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.forBtn .buttun {
+    border: 2px solid blue;
+    width: 200px;
+    padding: 10px;
+    font-size: 20px;
+    margin-top: 20px;
+    border-radius: 30px;
+    color: white;
+    background-color: blue;
+    transition: .1s;
+}
+.forBtn .buttun:hover {
+    background-color: white;
+    color: blue;
+    border: 2px solid blue;
+}
+.forBtn .buttun:focus {
+    background-color: green;
+    color: #fff;
+    border: 2px solid green;
+}
+.theadd1{
+    font-size: 20px;
+}
+.theadd{
+    margin-top: 50px;
+    background-color: rgb(54, 65, 47);
+    margin-left: 40px;
+}
+.theadd th{
+    padding: 15px;
+    color: white;
+}
+.srr{
+    background-color: rgb(218, 218, 218);
+    border-radius: 3px;
+    font-size: 3rem !important;
+}
+.posta input{
+    font-size: 1.2rem;
+    padding: 1rem;
+}
+.pluss{
+    text-align: end;
+}
+.pluss a i{
+    font-size: 60px;
+    padding: 0px !important;
+}
+.pluss a i:hover{
+    background-color: white;
+    color: blue;
+}
+.pluss a i:active{
+    transform: scale(1);
+}
+.pluss2 a i{
+    font-size: 30px;
+    border: none;
+    border-radius: 2px;
+    padding: 3px 6px !important;
+    background-color: rgb(216, 237, 255);
+    /* transition: all .05s ease-out; */
+}
+.pluss2 a i:hover{
+    /* transform: scale(1.05); */
+    background-color: rgb(167, 214, 255);
+}
+.opt{
+    background-color: rgb(235, 235, 235);
+    margin: 20px;
+    font-size: 20px;
+    display: block;
+    border-radius: 5px;
+}
+.pluss2 a i:active{
+    transform: scale(1);
+}
+select{
+    background-color: red;
+}
+select .soption{
+    height: 40px !important;
+    padding: 20px !important;
+    margin: 50px;
+    /* font-size: 80px; */
+}
+
+.soption1{
+    background-color: rgb(226, 226, 226);
+}
+/* .soptionmoy{
+    background-color: rgb(255, 224, 167);
+}
+.soptionsmazki{
+    background-color: rgb(175, 255, 175);
+}
+.soptionboshqa{
+    background-color: silver;
+}
+.soptionnamuna{
+    background-color: rgb(255, 180, 255);
+} */
+.innnn{
+    width: 90% !important;
+}
+.hhhh{
+    z-index: 999;
+}
+.h10{
+    font-size: 30px;
+    margin-left: 20px;
+}
+.posta {
+    justify-content: space-between;
+    align-items: center;
+}
+.mmm{
+    text-align: end !important;
+}
+table th{
+    font-size: 1.1rem;
+}
+table tbody{
+    padding: -5px !important;
+    font-size: 1.4rem;
+}
+.addposition{
+    background-color: blue;
+    padding: .8rem;
+    color: white;
+    border-radius: 5px;
+    margin: 1rem;
+    font-size: 1.4rem;
+    border: 1px solid blue;
+    transition: .2s;
+    /* top: 50px; */
+}
+.addposition:hover{
+    background-color: white;
+    color: blue;
+    border: 1px solid blue;
+}
+.addposition:active{
+    transform: scale(.99);
+}
+.addposition2{
+        background-color: blue;
+    padding: .8rem;
+    color: white;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    border: 1px solid blue;
+    transition: .1s;
+}
+.addposition2:hover{
+    background-color: white;
+    color: blue;
+    border: 1px solid blue;
+}
+.addposition2:active{
+    transform: scale(.9);
+}
+.vremennonevozmojen{
+    z-index: 900;
+}
+
+.zxc{
+    border: 1px solid black !important;
+    width: 15rem !important;
+}
+.listt p{
+    font-size: 1.2rem;
+}
+.listt h3{
+    font-size: 1.6rem;
+}
+.gggg{
+    animation: fadeOut .5s forwards ease-out;
+
+
+    z-index: 887;
+    position: fixed;
+    text-align: center;
+    top: 60px;
+    right: 42%;
+    align-items: center !important;
+    padding: 25px 58px;
+    background-color: green;
+    color: white;
+    border-radius: 4px;
+}
+@keyframes fadeOut {
+    0% {
+      opacity: 1; 
+      transform: translate(20px);
+    }
+    5%{
+        z-index: 888;
+        transform: translate(0px);
+    }
+    90%{
+        opacity: 1;
+        transform: translate(0px);
+    }
+    100% {
+        transform: translate(0px, -20px);
+      opacity: 0;
+      display: none;
+    }
+  }
