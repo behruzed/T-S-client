@@ -96,7 +96,7 @@ function RouteAdmin() {
         <Route element={<ChilonDobavitObraztsi />} path="/ariza-qoshish/chilon/obraztsi"></Route>
 
 
-        <Route element={<AdminPanel />} path="/adminpanel"></Route>
+        <Route exact path="/adminpanel" element={<AdminPanel/>} />
         <Route element={<Arizaqoshish />} path="/ariza-qoshish"></Route>
         <Route element={<Arxiv />} path="/arxiv"></Route>
         <Route element={<Moylar />} path="/moylar"></Route>
