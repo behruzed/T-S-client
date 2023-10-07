@@ -1,7 +1,7 @@
 import RouteSignIn from "./Routes/RouteSignIn"
-import RouteTrash from "./Routes/RouteTrash"
-import RouteTeacher from "./Routes/Teachers/RouteTeacher"
-import RouteStudents from "./Routes/Students/RouteStudent"
+import AdminPanel from "./Components/Admin/AdminPanel";
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
 
 import RouteAdmin from "./Routes/Admin/RouteAdmin"
 // import RouteLab from "./Routes/ALab/RouteLab"
@@ -29,9 +29,6 @@ function App() {
 
 
       <RouteSignIn />
-      <RouteTrash />
-      <RouteStudents />
-      <RouteTeacher />
       
       {/* Demo */}
       <Marqu/>

@@ -1447,18 +1447,6 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
                   </a>
                 </form>
                 <Bdobavit />
-
-
-                {/* <div className="forBtn">
-                  <button
-                    onClick={addTeacher}
-                    type="button"
-                    id="simple-search"
-                    className="buttun"
-                  >
-                    Отправить
-                  </button>
-                </div> */}
               </div>
             </div>
           </div>
