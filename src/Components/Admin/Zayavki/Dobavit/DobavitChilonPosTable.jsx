@@ -32,7 +32,6 @@ export default ({ th, spTeacherFunc, spTeacher }) => {
   let [data, setData] = useState([]);
 
   const getName1 = async () => {
-    // let qwee = await spTeacherFunc(id)
     let data1 = await axios.get(
       `${config.url}/pos/?parent=${window.localStorage.getItem("nom")}`,
       {
@@ -42,11 +41,26 @@ export default ({ th, spTeacherFunc, spTeacher }) => {
       }
     );
     setData(data1.data.data);
-    // prof1()
   };
   useEffect(() => {
     getName1();
   }, []);
+
+  const getName2 = async () => {
+    let data1 = await axios.get(
+      `${config.url}/addstatus/?forchildren=${window.localStorage.getItem("forchildren")}`,
+      {
+        headers: {
+          authorization: window.localStorage.getItem("token"),
+        },
+      }
+    );
+    setData(data1.data.data);
+  };
+  useEffect(() => {
+    getName2();
+  }, []);
+
   const [edit, setEdit] = useState(false);
   const [prof, setProf] = useState(false);
   const [backdrop, setBackdrop] = useState(false);

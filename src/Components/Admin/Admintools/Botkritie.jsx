@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import config from "../../../qwe/config";
-import Table from "./BotkritieTable";
+import Table from "./BotkritieTableForchildren";
 import '../style.css'
 import React from "react";
 
@@ -44,9 +44,9 @@ function Botkritie({fn}) {
         <>
             <div>
                 <div className="bg-white dark:bg-gray-900">
-                <div className="container w-full mx-auto py-12">
+                <div className="container w-8/12 mx-auto py-12">
                         <div className="relative overflow-x-auto sm:rounded-lg">
-                        <Table fn={fn} data={Botkritie} th={["Номер партии", "Название", "Наименование показателя", "Норма", "Значение"]} spTeacherFunc={checkHuman} spTeacher={spTeacher} />
+                        <Table fn={fn} data={Botkritie} th={["Название"]} spTeacherFunc={checkHuman} spTeacher={spTeacher} />
                         </div>
                     </div>
                 </div>
