@@ -1,7 +1,8 @@
 import React from "react";
 import Aside from "../Aside";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-// import Adminstudent from "../AdminStudent"
+// import Adminstudent from "../AdminStudent";
+import {Link} from 'react-router-dom'
 import Adminteacher from "../AdminTeacher"
 function Xodimlar() {
   return (
@@ -13,7 +14,7 @@ function Xodimlar() {
         </div>
         <div className="ong col-12 col-md-10">
         <Breadcrumb className="bread">
-            <Breadcrumb.Item href="/adminpanel">Главная</Breadcrumb.Item>
+        <Breadcrumb.Item><Link to="/adminpanel">Главная</Link></Breadcrumb.Item>
             <Breadcrumb.Item active>Сотрудники</Breadcrumb.Item>
           </Breadcrumb>
           <h1 className="h11">Сотрудники</h1>

@@ -2,7 +2,7 @@ import React from "react";
 import Aside from "../../Aside";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Chilonadds from './Chilonadds';
-
+import {Link} from "react-router-dom";
 function Chilonadd() {
   return (
     <>
@@ -13,9 +13,9 @@ function Chilonadd() {
         </div>
         <div className="ong col-12 col-md-10">
         <Breadcrumb className="bread">
-            <Breadcrumb.Item href="/adminpanel">Главная</Breadcrumb.Item>
-            <Breadcrumb.Item href="/shablonlar">Шаблоны</Breadcrumb.Item>
-            <Breadcrumb.Item href="/chilonshablon">Чилон</Breadcrumb.Item>
+        <Breadcrumb.Item><Link to="/adminpanel">Главная</Link></Breadcrumb.Item>
+        <Breadcrumb.Item><Link to="/shablonlar">Шаблоны</Link></Breadcrumb.Item>
+        <Breadcrumb.Item><Link to="/chilonshablon">Чилон</Link></Breadcrumb.Item>
             <Breadcrumb.Item active>Созданные шаблоны</Breadcrumb.Item>
           </Breadcrumb>
           <h1 className="h11">Созданные шаблоны</h1>

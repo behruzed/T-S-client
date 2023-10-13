@@ -6,6 +6,7 @@ import logochilon from "../../images/chilon-logo.svg";
 import logouno from "../../images/uno.webp";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import Aside from "./Aside";
+import { Link } from "react-router-dom"; // React Router kutubxonasidan Link komponentini import qiling
 
 function AdminPanel() {
   const [darkMode, setDarkMode] = useState(true);
@@ -48,7 +49,6 @@ function AdminPanel() {
       setStudent1(res.data.data[0]);
     }
   };
-  
 
   return (
     <>
@@ -58,25 +58,25 @@ function AdminPanel() {
           <Aside />
         </div>
         <div className="ong col-12 col-md-10">
-        <Breadcrumb className="bread">
+          <Breadcrumb className="bread">
             <Breadcrumb.Item active>Главная</Breadcrumb.Item>
           </Breadcrumb>
           <h1 className="h11">Панель администратора</h1>
           <div className="row rightrow text-center">
             <div className="col-6 mainimg text-center">
-            <a href="/Chilonshablon">
-              <div>
-                <img src={logochilon}></img>
-              </div>
-            </a>
+              <Link to="/Chilonshablon"> {/* Link komponentini o'rniga ishlatish */}
+                <div>
+                  <img src={logochilon} alt="Chilon Logo" />
+                </div>
+              </Link>
             </div>
 
             <div className="col-6 mainimg">
-            <a href="/Unoshablon">
-              <div>
-                <img src={logouno}></img>
-              </div>
-            </a>
+              <Link to="/Unoshablon"> {/* Link komponentini o'rniga ishlatish */}
+                <div>
+                  <img src={logouno} alt="Uno Logo" />
+                </div>
+              </Link>
             </div>
           </div>
         </div>

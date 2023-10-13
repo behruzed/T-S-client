@@ -6,6 +6,7 @@ import '../../../style.css'
 import React from "react";
 import Aside from "../../../Aside";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import {Link} from 'react-router-dom';
 
 function ChDSObshego() {
     let [Obshego, setItem] = useState([])
@@ -51,10 +52,10 @@ function ChDSObshego() {
         </div>
         <div className="ong col-12 col-md-10">
         <Breadcrumb className="bread">
-            <Breadcrumb.Item href="/adminpanel">Главная</Breadcrumb.Item>
-            <Breadcrumb.Item href="/ariza-qoshish">Добавить заявку</Breadcrumb.Item>
-            <Breadcrumb.Item href="/ariza-qoshish/chilon">Чилон</Breadcrumb.Item>
-            <Breadcrumb.Item href="/ariza-qoshish/chilon/smazki">Смазки</Breadcrumb.Item>
+        <Breadcrumb.Item><Link to={"/adminpanel"}>Главная</Link></Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={"/ariza-qoshish"}>Добавить заявку</Link></Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={"/ariza-qoshish/chilon"}>Чилон</Link></Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={"/ariza-qoshish/chilon/smazki"}>Смазки</Link></Breadcrumb.Item>
             <Breadcrumb.Item active>Смазки общего назначения</Breadcrumb.Item>
           </Breadcrumb>
           <h1 className="h11">Смазки общего назначения</h1>

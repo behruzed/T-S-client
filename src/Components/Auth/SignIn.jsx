@@ -1,12 +1,14 @@
 import { useRef, useState } from "react";
-// import "/Users/behru/Desktop/Chilon github/T-S-client/node_modules/bootstrap/dist/css/bootstrap.min.css";
 import config from "../../qwe/config";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+
 import "./sign.css";
 import wasat from "../../images/wasat.jpg";
 
 function SignIn() {
   const [spiner, setSpiner] = useState(false);
+  const navigate = useNavigate(); 
 
   const gcv = (inp) => {
     return inp.current.value;
@@ -38,21 +40,21 @@ function SignIn() {
         window.localStorage.setItem("token", TOKEN);
         window.localStorage.setItem("person", PERSON);
         if (res.data.status === "admin") {
-          window.location.replace(`/adminpanel`);
+          navigate(`/adminpanel`); // Tarixni ishlatib o'tish
         } else if (res.data.status === "Рабочий на производстве") {
-          window.location.replace("/proizvodstvo");
+          navigate("/proizvodstvo");
         } else if (res.data.status === "Работник лаборатории") {
-          window.location.replace("/laboratoriya");
+          navigate("/laboratoriya");
         } else if (res.data.status === "Начальник производства") {
-          window.location.replace("/nachalnik-pr");
+          navigate("/nachalnik-pr");
         } else if (res.data.status === "Заведующий лабораторией") {
-          window.location.replace("/nachalnik-lab");
+          navigate("/nachalnik-lab");
         } else if (res.data.status === "Склад") {
-          window.location.replace("/omborxona");
+          navigate("/omborxona");
         } else if (res.data.status === "Снабжения") {
-          window.location.replace("/taminlash");
+          navigate("/taminlash");
         } else if (res.data.status === "Технолог") {
-          window.location.replace("/texnolog");
+          navigate("/texnolog");
         }
       }
     } else {

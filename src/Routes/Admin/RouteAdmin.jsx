@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"; // react-router-dom kutubxonasini chaqiring
+import { Route, Routes, Link } from "react-router-dom"; // react-router-dom kutubxonasini chaqiring
 
 import AdminPanel from "../../Components/Admin/AdminPanel";
 import AdminStudent from "../../Components/Admin/AdminStudent";
@@ -46,6 +46,7 @@ import Obraztsi from "../../Components/Admin/Admintools/Shablonlar/Obraztsi/Obra
 
 
 
+import UnoDobavit from '../../Components/Admin/Zayavki/Dobavit/Uno/UnoDobavit'
 
 import ChilonDobavitAll from '../../Components/Admin/Zayavki/Dobavit/Chilon/ChilonDobavitAll'
 import ChilonDobavitMasla from '../../Components/Admin/Zayavki/Dobavit/Chilon/ChilonDobavitMasla'
@@ -88,6 +89,7 @@ function RouteAdmin() {
       <Route element={<ChDSObshego />} path="/ariza-qoshish/chilon/smazki/obshego"></Route>
       <Route element={<ChDSSpets />} path="/ariza-qoshish/chilon/smazki/spets"></Route>
 
+      <Route element={<UnoDobavit />} path="/ariza-qoshish/uno"></Route>
 
         <Route element={<ChilonDobavitAll />} path="/ariza-qoshish/chilon"></Route>
         <Route element={<ChilonDobavitMasla />} path="/ariza-qoshish/chilon/masla"></Route>
@@ -95,8 +97,8 @@ function RouteAdmin() {
         <Route element={<ChilonDobavitDrugie />} path="/ariza-qoshish/chilon/drugie"></Route>
         <Route element={<ChilonDobavitObraztsi />} path="/ariza-qoshish/chilon/obraztsi"></Route>
 
-
-        <Route exact path="/adminpanel" element={<AdminPanel/>} />
+        <Route path="/adminpanel" element={<AdminPanel/>} />
+        {/* <Route exact path="/adminpanel" element={<AdminPanel/>} /> */}
         <Route element={<Arizaqoshish />} path="/ariza-qoshish"></Route>
         <Route element={<Arxiv />} path="/arxiv"></Route>
         <Route element={<Moylar />} path="/moylar"></Route>

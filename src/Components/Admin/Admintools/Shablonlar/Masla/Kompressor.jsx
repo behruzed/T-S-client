@@ -6,6 +6,7 @@ import '../../../style.css'
 import React from "react";
 import Aside from '../../../Aside'
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import {Link} from 'react-router-dom';
 
 function Kompressor() {
     let [Kompressor, setItem] = useState([])
@@ -51,10 +52,10 @@ function Kompressor() {
                 </div>
                 <div className="ong col-12 col-md-10">
                 <Breadcrumb className="bread">
-                    <Breadcrumb.Item href="/adminpanel">Главная</Breadcrumb.Item>
-                    <Breadcrumb.Item href="/shablonlar">Шаблоны</Breadcrumb.Item>
-                    <Breadcrumb.Item href="/chilonshablon">Чилон</Breadcrumb.Item>
-                    <Breadcrumb.Item href="/chilon-moylar">Масла</Breadcrumb.Item>
+                <Breadcrumb.Item><Link to="/adminpanel">Главная</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item><Link to="/shablonlar">Шаблоны</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item><Link to="/chilonshablon">Чилон</Link></Breadcrumb.Item>
+                    <Breadcrumb.Item><Link to="/chilon-moylar">Масла</Link></Breadcrumb.Item>
                     <Breadcrumb.Item active>Компрессорные масла</Breadcrumb.Item>
                 </Breadcrumb>
                 <h1 className="h11">Компрессорные масла</h1>

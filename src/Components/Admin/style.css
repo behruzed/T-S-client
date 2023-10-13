@@ -8,6 +8,7 @@
     padding: 12px;
     margin: 0px !important;
     font-size: 24px;
+    overflow-x: auto !important;
 
 }
 .wer:hover{
@@ -127,6 +128,10 @@ box-shadow:  -1px 1px 5px gray;
 .hovred:hover{
     background-color: rgb(184, 0, 0) !important;
 }
+.hovred2{
+    background-color: rgb(184, 0, 0) !important;
+    color: white;
+}
 .chapbutton:hover{
     box-shadow: -3px 3px 2px gray;
     background-color: rgb(4, 4, 95);
@@ -143,14 +148,46 @@ box-shadow:  -1px 1px 5px gray;
     padding-top: 10px;
     height: 100vh;
     position: fixed;
-    z-index: 3;
-    background-color: rgb(233, 233, 233);
+}
+.chapbuttons2 a button{
+    margin: 5px 0px;
+    background-color: rgb(248, 229, 218);
+}
+.mbmenu{
+    background-color: rgb(21, 117, 18);
+    border-radius: 8px;
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    font-size: 2rem;
+    padding: .2rem;
+}
+.mbmenu2 button{
+    background-color: rgb(21, 117, 18);
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    font-size: 2rem;
+    padding: .2rem;
 }
 @media (max-width: 768px) {
-    .chap{
+    .glmenu{
         display: none;
     }
   }
+  @media (min-width: 768px) {
+    .mbmenu{
+        display: none;
+    }
+    .chap{
+    z-index: 3;
+    background-color: rgb(233, 233, 233);
+    }
+  }
+.offcbtn{
+    z-index: 999;
+    background-color: red;
+}
 .chap .rasm a{
     display: flex; /* Add this line */
     /* text-align: center; */
@@ -359,7 +396,7 @@ select .soption{
     width: 90% !important;
 }
 .hhhh{
-    z-index: 999;
+    z-index: 997;
 }
 .h10{
     font-size: 30px;

@@ -1,6 +1,8 @@
 import React from "react";
 import Aside from "../Aside";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { Link } from "react-router-dom"; // React Router kutubxonasi orqali Link komponentini import qiling
+
 function Ombor() {
   return (
     <>
@@ -10,13 +12,12 @@ function Ombor() {
           <Aside />
         </div>
         <div className="ong col-12 col-md-10">
-        <Breadcrumb className="bread">
-            <Breadcrumb.Item href="/adminpanel">Главная</Breadcrumb.Item>
+          <Breadcrumb className="bread">
+          <Breadcrumb.Item><Link to="/adminpanel">Главная</Link></Breadcrumb.Item>
             <Breadcrumb.Item active>Склад</Breadcrumb.Item>
           </Breadcrumb>
           <h1 className="h11">Склад</h1>
           <h2 className="h10 text-center">Его нельзя использовать временно</h2>
-
         </div>
       </div>
     </>

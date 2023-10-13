@@ -48,16 +48,18 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
     prof1()
   };
   const getName2 = async (e, id) => {
-    let qwe = await spTeacherFunc(id)
-
-    let data1 = await axios.get(`${config.url}/addstatus/?forchildren=${window.localStorage.getItem("forchildren")}`,
-
-    {
+    let qwe = await spTeacherFunc(id);
+  
+    let data1 = await axios.get(
+      `${config.url}/addstatus/?forchildren=${window.localStorage.getItem("forchildren")}&parent=${window.localStorage.getItem("nom")}`,
+      {
         headers: {
           authorization: window.localStorage.getItem("token")
         }
-      });
+      }
+    );
   };
+  
   const [edit, setEdit] = useState(false);
   const [prof, setProf] = useState(false);
   const [backdrop, setBackdrop] = useState(false);
@@ -315,7 +317,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
     let res = await axios.put(`${config.url}/addstatus/change`,
       {
         statusFrom: status,
-        status: "closed",
+        status: "opened",
         openedBy: window.localStorage.getItem("person"),
         parName: ref1.current.value
       },

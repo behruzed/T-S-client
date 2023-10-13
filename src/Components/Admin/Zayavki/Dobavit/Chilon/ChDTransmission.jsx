@@ -6,6 +6,7 @@ import '../../../style.css'
 import React from "react";
 import Aside from "../../../Aside";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import {Link} from 'react-router-dom';
 
 function ChDTransmission() {
     let [Transmission, setItem] = useState([])
@@ -51,10 +52,10 @@ function ChDTransmission() {
         </div>
         <div className="ong col-12 col-md-10">
         <Breadcrumb className="bread">
-            <Breadcrumb.Item href="/adminpanel">Главная</Breadcrumb.Item>
-            <Breadcrumb.Item href="/ariza-qoshish">Добавить заявку</Breadcrumb.Item>
-            <Breadcrumb.Item href="/ariza-qoshish/chilon">Чилон</Breadcrumb.Item>
-            <Breadcrumb.Item href="/ariza-qoshish/chilon/masla">Масла</Breadcrumb.Item>
+        <Breadcrumb.Item><Link to={"/adminpanel"}>Главная</Link></Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={"/ariza-qoshish"}>Добавить заявку</Link></Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={"/ariza-qoshish/chilon"}>Чилон</Link></Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={"/ariza-qoshish/chilon/masla"}>Масла</Link></Breadcrumb.Item>
             <Breadcrumb.Item active>Трансмиссионные масла</Breadcrumb.Item>
           </Breadcrumb>
           <h1 className="h11">Трансмиссионные масла</h1>

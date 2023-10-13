@@ -48,7 +48,7 @@ export default ({ th, spTeacherFunc, spTeacher }) => {
 
   const getName2 = async () => {
     let data1 = await axios.get(
-      `${config.url}/addstatus/?forchildren=${window.localStorage.getItem("forchildren")}`,
+      `${config.url}/addstatus/?forchildren=${window.localStorage.getItem("forchildren")}&parent=${window.localStorage.getItem("nom")}`,
       {
         headers: {
           authorization: window.localStorage.getItem("token"),
@@ -56,7 +56,8 @@ export default ({ th, spTeacherFunc, spTeacher }) => {
       }
     );
     setData(data1.data.data);
-  };
+  }
+  
   useEffect(() => {
     getName2();
   }, []);

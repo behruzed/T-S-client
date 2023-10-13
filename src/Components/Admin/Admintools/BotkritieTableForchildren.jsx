@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRef, useState } from "react";
 import config from "../../../qwe/config";
-// import BotkritieForchildren from "./BotkritieForchildren"
+import Bochiquchun from "./Bochiquchun";
 import "../style.css";
 
 const formatDate = (dateStr) => {
@@ -20,9 +20,10 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
   const getName1 = async (e, id) => {
     let qwe = await spTeacherFunc(id);
     window.localStorage.setItem("nom", qwe._id);
+    window.localStorage.setItem("forchildren", qwe.children);
 
     let data1 = await axios.get(
-      `${config.url}/pos/?parent=${window.localStorage.getItem("nom")}`,
+      `${config.url}/pos/?parent=${window.localStorage.getItem("nom")}&forchildren=${window.localStorage.getItem("forchildren")}`,
       {
         headers: {
           authorization: window.localStorage.getItem("token"),
@@ -130,7 +131,7 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
       position2: gcv(inp25).length === 0 ? undefined : gcv(inp25),
       parent: gcv(inp26).length === 0 ? undefined : gcv(inp26),
     };
-    let res = await axios.put(`${config.url}/bdobavit/${teacherId}`, data, {
+    let res = await axios.put(`${config.url}/bochiq/${teacherId}`, data, {
       headers: {
         authorization: window.localStorage.getItem("token"),
       },
@@ -169,7 +170,7 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
     inp26.current.value = "";
   };
   const delTeacher = async (id) => {
-    let res = await axios.delete(`${config.url}/bdobavit/${id}`, {
+    let res = await axios.delete(`${config.url}/bochiq/${id}`, {
       headers: {
         authorization: window.localStorage.getItem("token"),
       },
@@ -237,7 +238,7 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
         position2: gcv(inp25),
         parent: gcv(inp26),
       };
-      let res = await axios.post(`${config.url}/bdobavit`, data, {
+      let res = await axios.post(`${config.url}/bochiq`, data, {
         headers: {
           authorization: window.localStorage.getItem("token"),
         },
@@ -825,8 +826,8 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
                 <div className=" w-full p-3 border-none bg-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700 ">
                   <div className="teacher flex justify-end px-4 pt-4"></div>
                   <div className=" pb-10">
-
-aaaaa                    {backdropp && (
+<Bochiquchun/>
+                    {backdropp && (
                       <div
                         id="post-modal"
                         tabIndex="-1"
@@ -1290,8 +1291,6 @@ aaaaa                    {backdropp && (
                       ></div>
                     )}
                     {/* org */}
-                    {/* <DobavitChilonPos /> */}
-
                     {/* <p className="mb-1 text-xl  text-gray-900 dark:text-white">
                       <strong>Название : </strong>
                       {spTeacher.name}

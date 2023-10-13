@@ -20,9 +20,10 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
   const getName1 = async (e, id) => {
     let qwe = await spTeacherFunc(id);
     window.localStorage.setItem("nom", qwe._id);
+    window.localStorage.setItem("forchildren", qwe.children);
 
     let data1 = await axios.get(
-      `${config.url}/pos/?parent=${window.localStorage.getItem("nom")}`,
+      `${config.url}/pos/?parent=${window.localStorage.getItem("nom")}&forchildren=${window.localStorage.getItem("forchildren")}`,
       {
         headers: {
           authorization: window.localStorage.getItem("token"),

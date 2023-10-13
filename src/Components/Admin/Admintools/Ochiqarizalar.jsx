@@ -2,6 +2,7 @@ import React from "react";
 import Aside from "../Aside";
 import Oddiy from "./Oddiy"
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import {Link} from "react-router-dom"
 function Ochiqarizalar() {
   return (
     <>
@@ -12,7 +13,7 @@ function Ochiqarizalar() {
         </div>
         <div className="ong col-12 col-md-10">
         <Breadcrumb className="bread">
-            <Breadcrumb.Item href="/adminpanel">Главная</Breadcrumb.Item>
+        <Breadcrumb.Item><Link to="/adminpanel">Главная</Link></Breadcrumb.Item>
             <Breadcrumb.Item active>Открытие заявки</Breadcrumb.Item>
           </Breadcrumb>
           <h1 className="h11">Открытие заявки</h1>

@@ -3,6 +3,7 @@ import "../../Students/stylestudent.css";
 import axios from "axios";
 import React from "react";
 import Aside from "../Aside";
+import { Link } from "react-router-dom"
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import config from "../../../qwe/config";
 import '../style.css'
@@ -73,9 +74,9 @@ function Infoo() {
         </div>
         <div className="ong col-12 col-md-10">
         <Breadcrumb className="bread">
-            <Breadcrumb.Item href="/adminpanel">Главная</Breadcrumb.Item>
-            <Breadcrumb.Item active>Личный кабинет</Breadcrumb.Item>
-          </Breadcrumb>
+          <Breadcrumb.Item><Link to="/adminpanel">Главная</Link></Breadcrumb.Item>
+          <Breadcrumb.Item active>Личный кабинет</Breadcrumb.Item>
+        </Breadcrumb>
           <div className="row justify-content-center align-items-center m-5">
         <div className="col-12 infoimg text-center col-md-6">
             <img
@@ -85,8 +86,7 @@ function Infoo() {
         </div>
         <div className="col-12 col-md-6 text-center">
             <h1 className="mb-1 text-xl mypfr">Личный кабинет</h1><br></br>
-            <p className="mb-1 text-xl  text-gray-900"><strong>{student1.firstName} {student1.lastName}</strong></p>
-            <p className="mb-1 text-xl  text-gray-900"><strong>Статус: </strong>{student1.status}</p>
+            <p className="mb-1 text-xl  text-gray-900"><strong>{window.localStorage.getItem("person")} {student1.lastName}</strong></p>
         </div>
       </div>
       <h5 className="text-center pl-5 pr-5">

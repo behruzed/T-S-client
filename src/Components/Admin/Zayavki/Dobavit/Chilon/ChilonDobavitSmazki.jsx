@@ -1,6 +1,9 @@
 import React from "react";
 import Aside from "../../../Aside";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { Link } from 'react-router-dom'; // Link komponentini o'rnating
+import '../../../style.css';
+
 function ChilonDobavitSmazki() {
   return (
     <>
@@ -11,16 +14,16 @@ function ChilonDobavitSmazki() {
         </div>
         <div className="ong col-12 col-md-10">
           <Breadcrumb className="bread">
-            <Breadcrumb.Item href="/adminpanel">Главная</Breadcrumb.Item>
-            <Breadcrumb.Item href="/ariza-qoshish">Добавить заявку</Breadcrumb.Item>
-            <Breadcrumb.Item href="/ariza-qoshish/chilon">Чилон</Breadcrumb.Item>
+          <Breadcrumb.Item><Link to={"/adminpanel"}>Главная</Link></Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={"/ariza-qoshish"}>Добавить заявку</Link></Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={"/ariza-qoshish/chilon"}>Чилон</Link></Breadcrumb.Item>
             <Breadcrumb.Item active>Смазки</Breadcrumb.Item>
           </Breadcrumb>
           <h1 className="h11">Смазки</h1>
           <ul className="moyul">
-            <a href="/ariza-qoshish/chilon/smazki/jeleznodorojniy"><li className="moyli moylidiz">Железнодорожные смазки</li></a>
-            <a href="/ariza-qoshish/chilon/smazki/obshego"><li className="moyli moylidiz">Смазки общего назначения</li></a>
-            <a href="/ariza-qoshish/chilon/smazki/spets"><li className="moyli moylidiz">Спец. смазки</li></a>
+            <Link to="/ariza-qoshish/chilon/smazki/jeleznodorojniy"><li className="moyli moylidiz">Железнодорожные смазки</li></Link>
+            <Link to="/ariza-qoshish/chilon/smazki/obshego"><li className="moyli moylidiz">Смазки общего назначения</li></Link>
+            <Link to="/ariza-qoshish/chilon/smazki/spets"><li className="moyli moylidiz">Спец. смазки</li></Link>
           </ul>
         </div>
       </div>
