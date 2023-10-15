@@ -317,7 +317,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
     let res = await axios.put(`${config.url}/addstatus/change`,
       {
         statusFrom: status,
-        status: "opened",
+        status: "closed",
         openedBy: window.localStorage.getItem("person"),
         parName: ref1.current.value
       },

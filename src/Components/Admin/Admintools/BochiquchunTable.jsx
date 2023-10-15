@@ -14,8 +14,9 @@ const formatDate = (dateStr) => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
-export default ({ th, spTeacherFunc, spTeacher }) => {
+export default ({ th, spTeacher }) => {
   const [showMessage, setShowMessage] = useState(false);
+  const [data, setData] = useState([]);
 
 
   useEffect(() => {
@@ -29,11 +30,10 @@ export default ({ th, spTeacherFunc, spTeacher }) => {
   }, [showMessage]);
 
 
-  let [data, setData] = useState([]);
 
   const getName1 = async () => {
     let data1 = await axios.get(
-      `${config.url}/bochiq/?parent=${window.localStorage.getItem("nom")}&forchildren=${window.localStorage.getItem("forchildren")}`,
+      `${config.url}/pos/getChild?forchildren=${window.localStorage.getItem("forchildren")}`,
       {
         headers: {
           authorization: window.localStorage.getItem("token"),
@@ -324,7 +324,6 @@ export default ({ th, spTeacherFunc, spTeacher }) => {
         setTimeout(() => {
           setShowMessage(false); 
         }, 1000);
-    console.log(id);
     let res = await axios.put(`${config.url}/bochiq/${id}`,
       { a: "opened" },
       {
@@ -332,7 +331,6 @@ export default ({ th, spTeacherFunc, spTeacher }) => {
           authorization: window.localStorage.getItem("token"),
         }
       },)
-    console.log(res);
   }
   return (
     <>
@@ -361,7 +359,7 @@ export default ({ th, spTeacherFunc, spTeacher }) => {
         </thead>
         <tbody className="wer">
           {data.map((item, i) => {
-            { console.log(data) }
+          console.log(item);
             return (
               <tr
                 key={item._id}
@@ -375,32 +373,7 @@ export default ({ th, spTeacherFunc, spTeacher }) => {
                 </th>
                 <td className="px-6 py-2">{item.position1}</td>
                 <td className="px-6 py-2">{item.position2}</td>
-                <td className="px-6 py-2 pluss2 text-right w-52">
-
-
-                  {/* <a
-                    onClick={edit1}
-                    onClickCapture={() => {
-                      getId(item._id);
-                    }}
-                    data-modal-target="authentication-modal"
-                    data-modal-toggle="authentication-modal"
-                    href="#"
-                    className="ml-3 font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    <i className="fa-solid fa-pen"></i>
-                  </a> */}
-
-                  {/* <a
-                    onClick={() => {
-                      delTeacher(item._id);
-                    }}
-                    href="#"
-                    className="ml-3 font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    <i className="fa-solid fa-trash"></i>
-                  </a> */}
-                </td>
+                <td className="px-6 py-2 pluss2 text-right w-52"></td>
               </tr>
             );
           })}

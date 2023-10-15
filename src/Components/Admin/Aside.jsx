@@ -17,7 +17,7 @@ function Aside() {
     <>
       <div className="mbmenu">
       <Button className='offcbtn' variant="primary" onClick={handleShow}>
-      <i class="fa-solid fa-bars"></i>
+      <i className="fa-solid fa-bars"></i>
       </Button>
 
       <Offcanvas show={show} onHide={handleClose}>

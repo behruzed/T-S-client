@@ -21,7 +21,6 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
 
   const [showMessage, setShowMessage] = useState(false);
   const handleButtonClick = () => {
-    console.log("a");
     setShowMessage(true);
     
     setTimeout(() => {
@@ -40,15 +39,15 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
   async function qwe1(q){
     if(q.current.length>0){
        q.current.forEach(async(element) => {
+        console.log(q);
         const data = [
           {
             id: element.id,
-            statusFrom: status,
+            statusFrom: "closed",
             // 111
             status: "zakritie",
             closedBy: window.localStorage.getItem("person"),
-            commentByOpener: element.value,
-            // parName: ref1.current.value
+            // commentByOpener: element.value,
           },
         ]
         let res = await axios.put(`${config.url}/addstatusotkritie/change`,{data},
@@ -324,9 +323,21 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
   };
   const [category, setCategory] = useState("");
   async function qwe(e, status) {
-    
-    // backdrop2
+    let res = await axios.put(`${config.url}/addstatusotkritie/change`,
+      {
+        statusFrom: status,
+        closedBy: window.localStorage.getItem("person"),
+        status: "zakritie",
+      },
+      {
+        headers: {
+          authorization: window.localStorage.getItem("token"),
+        }
+      },)
+    console.log(res.config.data);
   }
+  // async function qwe(e, status) {
+  //   }
   let ref1 = useRef()
   return (
     <>
@@ -351,7 +362,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
                     <button onClick={() => {
     handleButtonClick();
     // backdrop1();
-    window.location.reload();
+    // window.location.reload();
   }} className="addposition">
                       Подвердить
                     </button>

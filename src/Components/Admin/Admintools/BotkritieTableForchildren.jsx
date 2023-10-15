@@ -15,28 +15,21 @@ const formatDate = (dateStr) => {
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
-  const itemsRef = useRef([])
-  fn(itemsRef)
-  const getName1 = async (e, id) => {
-    let qwe = await spTeacherFunc(id);
-    window.localStorage.setItem("nom", qwe._id);
-    window.localStorage.setItem("forchildren", qwe.children);
-
-    let data1 = await axios.get(
-      `${config.url}/pos/?parent=${window.localStorage.getItem("nom")}&forchildren=${window.localStorage.getItem("forchildren")}`,
-      {
-        headers: {
-          authorization: window.localStorage.getItem("token"),
-        },
-      }
-    );
-    prof1();
-  };
   const [edit, setEdit] = useState(false);
   const [prof, setProf] = useState(false);
   const [backdrop, setBackdrop] = useState(false);
   const [backdropp, setBackdropp] = useState(false);
   const [teacherId, setTecherId] = useState("");
+  const itemsRef = useRef([])
+
+  fn(itemsRef)
+  const getName1 = async (e, id) => {
+    let qwe = await spTeacherFunc(id);
+    window.localStorage.setItem("nom", qwe._id);
+    window.localStorage.setItem("forchildren", qwe.children);
+    prof1();
+  };
+
   // const nameInputRef = useRef(null);
 
   // const getName = () => {

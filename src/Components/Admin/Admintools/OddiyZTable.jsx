@@ -299,12 +299,6 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
   const [category, setCategory] = useState(""); 
 
   async function qwe(e, status) {
-
-
-
-
-
-    // backdrop2
     console.log(e);
     let res = await axios.put(`${config.url}/addstatuszakritie/change`,
       {
