@@ -59,6 +59,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
       })
     }
   }
+  
   const getName1 = async (e, id) => {
     let qwe = await spTeacherFunc(id)
     window.localStorage.setItem("nom", qwe._id);

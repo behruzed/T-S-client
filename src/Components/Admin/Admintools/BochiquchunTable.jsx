@@ -317,6 +317,7 @@ export default ({ th, spTeacher }) => {
       alert("Barcha maydonlarni to`ldiring...");
     }
   };
+  
   const [category, setCategory] = useState("");
   const changeStatus = async (e, id) => {
         setShowMessage(true)
@@ -334,6 +335,27 @@ export default ({ th, spTeacher }) => {
   }
   return (
     <>
+      <div className="isisis">
+      <a
+                    onClick={(e) => {
+                      qwe(e, "closed")
+                    }}
+                    data-modal-target="post-modal"
+                    data-modal-toggle="post-modal"
+                    href="#"
+                    className="post-medium isis text-lg text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    {/* <i className="fa-solid fa-square-plus"></i> */}
+                    <button onClick={() => {
+    handleButtonClick();
+    // backdrop1();
+    // window.location.reload();
+  }} className="addposition">
+                      Подвердить
+                    </button>
+                    {/* {spTeacher._id} */}
+                  </a>
+      </div>
       {showMessage && (
         <div className="gggg">
           Добавлен
@@ -373,6 +395,8 @@ export default ({ th, spTeacher }) => {
                 </th>
                 <td className="px-6 py-2">{item.position1}</td>
                 <td className="px-6 py-2">{item.position2}</td>
+                <td className="px-6 py-2"><input className="zxc mx-auto mb-3 w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input></td>
+                {/* <td className="px-6 py-2"><input data-id={item._id} ref={el => itemsRef.current[i] = {...el,id:item._id}} className="zxc mx-auto mb-3 w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input></td> */}
                 <td className="px-6 py-2 pluss2 text-right w-52"></td>
               </tr>
             );
