@@ -11,12 +11,12 @@ function Ochiqarizalar() {
           <Aside />
         </div>
         <div className="ong col-12 col-md-10">
-        <Breadcrumb className="bread">
+          <Breadcrumb className="bread">
             <Breadcrumb.Item href="/adminpanel">Главная</Breadcrumb.Item>
             <Breadcrumb.Item active>Открытие заявки</Breadcrumb.Item>
           </Breadcrumb>
           <h1 className="h11">Открытие заявки</h1>
-          <Oddiy/>
+          <Oddiy />
         </div>
       </div>
     </>

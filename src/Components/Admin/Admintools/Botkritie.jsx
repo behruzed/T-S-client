@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import config from "../../../qwe/config";
-import Table from "./BotkritieTableForchildren";
+import Table from "./BotkritieTable";
 import '../style.css'
 import React from "react";
 
-function Botkritie({fn}) {
+function Botkritie({ fn }) {
     let [Botkritie, setItem] = useState([])
     let [spTeacher, setSpTecher] = useState([])
     const [darkMode, setDarkMode] = useState(true);
@@ -44,9 +44,9 @@ function Botkritie({fn}) {
         <>
             <div>
                 <div className="bg-white dark:bg-gray-900">
-                <div className="container w-8/12 mx-auto py-12">
+                    <div className="container w-full mx-auto py-12">
                         <div className="relative overflow-x-auto sm:rounded-lg">
-                        <Table fn={fn} data={Botkritie} th={["Название"]} spTeacherFunc={checkHuman} spTeacher={spTeacher} />
+                            <Table fn={fn} data={Botkritie} th={["Номер партии", "НАИМЕНОВАНИЕ ПОКАЗАТЕЛЯ", "НОРМА", "ЗНАЧЕНИЕ"]} spTeacherFunc={checkHuman} spTeacher={spTeacher} />
                         </div>
                     </div>
                 </div>

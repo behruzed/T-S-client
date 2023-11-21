@@ -337,6 +337,20 @@ box-shadow:  -1px 1px 5px gray;
     font-size: 1.2rem;
     padding: 1rem;
 }
+.adpanel{
+    animation-name: adpanel;
+    animation-duration: .3s;
+    animation-timing-function: ease-out;
+}
+@keyframes adpanel {
+    from{
+        transform: scale(1.4);
+    }
+    to{
+
+    }
+}
+
 .pluss{
     text-align: end;
 }

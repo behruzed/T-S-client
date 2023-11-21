@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import config from "../../../qwe/config";
 // import DobavitChilonPos from "../DobavitChilonPos";
 import "../style.css";
@@ -14,16 +14,82 @@ const formatDate = (dateStr) => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
-export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
-  const itemsRef = useRef([])
-  fn(itemsRef)
+export default ({ data, th, spTeacherFunc, spTeacher}) => {
+
+
+  
+  let [Botkritie1, setItem] = useState([])
+  const itemsRef = useRef([]);
+
+  const [showMessage, setShowMessage] = useState(false);
+  const handleButtonClick = () => {
+    setShowMessage(true);
+    
+    setTimeout(() => {
+      setShowMessage(false); 
+    }, 1000);
+
+  }
+  useEffect(() => {
+    if(showMessage) {
+      const timeout = setTimeout(() => {
+        setShowMessage(false);
+      }, 1000);
+      return () => clearTimeout(timeout); 
+    }
+  }, [showMessage]);
+  async function qwe1(q){
+    if(q.current.length>0){
+       q.current.forEach(async(element) => {
+        console.log(q);
+        const data = [
+          {
+            id: element.id,
+            statusFrom: "closed",
+            // 111
+            status: "zakritie",
+            closedBy: window.localStorage.getItem("person"),
+            // commentByOpener: element.value,
+          },
+        ]
+        let res = await axios.put(`${config.url}/addstatusotkritie/change`,{data},
+          {
+            headers: {
+              authorization: window.localStorage.getItem("token"),
+            }
+          },)
+      })
+    }
+  }
+  const getName2 = async (e, id) => {
+    let qwe = await spTeacherFunc(id)
+    window.localStorage.setItem("nom", qwe._id);
+    window.localStorage.setItem("forchildren", qwe.name);
+    console.log(qwe.name)
+
+    let data1 = await axios.get(`${config.url}/pos/?parent=${window.localStorage.getItem("nom")}`,
+      {
+        headers: {
+          authorization: window.localStorage.getItem("token")
+        }
+      });
+    prof1()
+  };
+
+
+
+
+
+
+  
   const getName1 = async (e, id) => {
     let qwe = await spTeacherFunc(id);
     window.localStorage.setItem("nom", qwe._id);
-    window.localStorage.setItem("forchildren", qwe.children);
+    window.localStorage.setItem("forchildren", qwe.name);
 
     let data1 = await axios.get(
       `${config.url}/pos/?parent=${window.localStorage.getItem("nom")}&forchildren=${window.localStorage.getItem("forchildren")}`,
+      `${config.url}/botkritie/getChild/?parent=${window.localStorage.getItem("nom")}&forchildren=${window.localStorage.getItem("forchildren")}&thattime=${window.localStorage.getItem("thattime")}`,
       {
         headers: {
           authorization: window.localStorage.getItem("token"),
@@ -34,6 +100,7 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
   };
   const [edit, setEdit] = useState(false);
   const [prof, setProf] = useState(false);
+  const [prof3, setProf3] = useState(false);
   const [backdrop, setBackdrop] = useState(false);
   const [backdropp, setBackdropp] = useState(false);
   const [teacherId, setTecherId] = useState("");
@@ -92,9 +159,12 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
   const edit1 = () => {
     setEdit(!edit);
   };
+  const prof4 = () => {
+    setProf3(!prof3);
+  };
   const prof1 = () => {
     setProf(!prof);
-  };
+  };  
   const getId = (id) => {
     setTecherId(id);
   };
@@ -131,7 +201,7 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
       position2: gcv(inp25).length === 0 ? undefined : gcv(inp25),
       parent: gcv(inp26).length === 0 ? undefined : gcv(inp26),
     };
-    let res = await axios.put(`${config.url}/bdobavit/${teacherId}`, data, {
+    let res = await axios.put(`${config.url}/botkritie/${teacherId}`, data, {
       headers: {
         authorization: window.localStorage.getItem("token"),
       },
@@ -170,7 +240,7 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
     inp26.current.value = "";
   };
   const delTeacher = async (id) => {
-    let res = await axios.delete(`${config.url}/bdobavit/${id}`, {
+    let res = await axios.delete(`${config.url}/botkritie/${id}`, {
       headers: {
         authorization: window.localStorage.getItem("token"),
       },
@@ -238,7 +308,7 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
         position2: gcv(inp25),
         parent: gcv(inp26),
       };
-      let res = await axios.post(`${config.url}/bdobavit`, data, {
+      let res = await axios.post(`${config.url}/botkritie`, data, {
         headers: {
           authorization: window.localStorage.getItem("token"),
         },
@@ -282,9 +352,50 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
     }
   };
   const [category, setCategory] = useState("");
-
+  async function qwe(e, status) {
+    let res = await axios.put(`${config.url}/addstatusotkritie/change`,
+      {
+        statusFrom: status,
+        closedBy: window.localStorage.getItem("person"),
+        status: "zakritie",
+      },
+      {
+        headers: {
+          authorization: window.localStorage.getItem("token"),
+        }
+      },)
+    console.log(res.config.data);
+    window.location.reload()
+  }
   return (
     <>
+
+{showMessage && (
+  <div className="gggg">
+    Заявка отправлена
+  </div>
+)}
+          <div className="posta mmm d-flex">
+        <div></div>
+                  <a
+                    onClick={(e) => {
+                      qwe(e, "closed")
+                    }}
+                    data-modal-target="post-modal"
+                    data-modal-toggle="post-modal"
+                    href="#"
+                    className="post-medium mr-8 text-lg text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    {/* <i className="fa-solid fa-square-plus"></i> */}
+                    <button onClick={() => {
+    handleButtonClick();
+  }}
+  className="addposition">
+                      Подвердить1
+                    </button>
+                    {/* {spTeacher._id} */}
+                  </a>
+                </div>
       {/* <h1 className="h10">Все продукты</h1> */}
 
       <table className="table w-full text-sm text-left text-gray-500">
@@ -319,10 +430,9 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
                   {i + 1}
                 </th>
                 <td className="px-6 py-2">{item.partiyaName}</td>
-                <td className="px-6 py-2">{item.name}</td>
                 <td className="px-6 py-2">{item.position1}</td>
                 <td className="px-6 py-2">{item.position2}</td>
-                <td className="px-6 py-2"><input data-id={item._id} ref={el => itemsRef.current[i] = {...el,id:item._id}} className="zxc mx-auto mb-3 w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input></td>
+                <td className="px-6 py-2"><input className="zxc mx-auto mb-3 w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input></td>
                 <td className="px-6 py-2 pluss2 text-right w-20">
                     
                 <a
@@ -357,7 +467,7 @@ export default ({ data, th, spTeacherFunc, spTeacher ,fn}) => {
           <div className="relative w-5/12 max-h-full">
             <div className="w-full relative bg-white rounded-lg shadow dark:bg-gray-700">
               <button
-                onClick={edit1}
+                onClick={prof3}
                 type="button"
                 className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
                 data-modal-hide="authentication-modal"

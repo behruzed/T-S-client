@@ -37,7 +37,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
     let qwe = await spTeacherFunc(id)
     window.localStorage.setItem("nom", qwe._id);
     window.localStorage.setItem("forchildren", qwe.name);
-
+    window.localStorage.setItem("thattime", qwe.children);
     let data1 = await axios.get(`${config.url}/pos/?parent=${window.localStorage.getItem("nom")}`,
 
     {
@@ -319,7 +319,8 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
         statusFrom: status,
         status: "closed",
         openedBy: window.localStorage.getItem("person"),
-        parName: ref1.current.value
+        parName: ref1.current.value,
+        nom: window.localStorage.getItem("nom")
       },
       {
         headers: {

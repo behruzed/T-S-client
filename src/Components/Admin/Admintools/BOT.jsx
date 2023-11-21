@@ -1,12 +1,13 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
-import config from "../../../qwe/config"
-import Bochiquchun from "./Bochiquchun";
+import { useRef, useState } from "react";
+import config from "../../../qwe/config";
+// import DobavitChilonPos from "../DobavitChilonPos";
 import "../style.css";
+import Botkritie from "./Botkritie"
 
 const formatDate = (dateStr) => {
   const date = new Date(dateStr);
-  const year = date.getFullYear();
+  const year = dateprof.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
   const hours = date.getHours();
@@ -14,53 +15,47 @@ const formatDate = (dateStr) => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
-export default ({ th, spTeacher }) => {
-  const [showMessage, setShowMessage] = useState(false);
-  const [data, setData] = useState([]);
+export default ({ data, th, spTeacherFunc, spTeacher }) => {
+
+  const eee = async (e, id) => {
+    let qwe = await spTeacherFunc(id)
+    window.localStorage.setItem("nom", qwe._id);
+
+    let data1 = await axios.get(`${config.url}/botkritie/?parent=${window.localStorage.getItem("nom")}&forchildren=${window.localStorage.getItem("forchildren")}&thattime=${window.localStorage.getItem("thattime")}`,
+      {
+        headers: {
+          authorization: window.localStorage.getItem("token")
+        }
+      });
+  };
 
 
-  useEffect(() => {
-    if (showMessage) {
-      const timeout = setTimeout(() => {
-        setShowMessage(false);
-      }, 1000);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [showMessage]);
 
 
+  const getName1 = async (e, id) => {
+    let qwe = await spTeacherFunc(id);
+    window.localStorage.setItem("nom", qwe._id);
+    window.localStorage.setItem("thattime", qwe.children);
+    window.localStorage.setItem("forchildren", qwe.name);
 
-  const getName1 = async () => {
+    let data2 = await axios.get(`${config.url}/botkritie/getChild/?parent=${window.localStorage.getItem("nom")}&forchildren=${window.localStorage.getItem("forchildren")}&thattime=${window.localStorage.getItem("thattime")}`,
+    {
+      headers: {
+        authorization: window.localStorage.getItem("token")
+      }
+    })
+
     let data1 = await axios.get(
-      `${config.url}/pos/getChild?forchildren=${window.localStorage.getItem("forchildren")}`,
+      `${config.url}/botkritie/getChild/?parent=${window.localStorage.getItem("nom")}&forchildren=${window.localStorage.getItem("forchildren")}&thattime=${window.localStorage.getItem("thattime")}`,
+      `${config.url}/pos/?parent=${window.localStorage.getItem("nom")}`,
       {
         headers: {
           authorization: window.localStorage.getItem("token"),
         },
       }
     );
-    setData(data1.data.data);
+    prof1();
   };
-  useEffect(() => {
-    getName1();
-  }, []);
-
-  const getName2 = async () => {
-    let data1 = await axios.get(
-      `${config.url}/addstatuschildren/?forchildren=${window.localStorage.getItem("forchildren")}&parent=${window.localStorage.getItem("nom")}`,
-      {
-        headers: {
-          authorization: window.localStorage.getItem("token"),
-        },
-      }
-    );
-    setData(data1.data.data);
-  };
-  useEffect(() => {
-    getName2();
-  }, []);
-
   const [edit, setEdit] = useState(false);
   const [prof, setProf] = useState(false);
   const [backdrop, setBackdrop] = useState(false);
@@ -160,7 +155,7 @@ export default ({ th, spTeacher }) => {
       position2: gcv(inp25).length === 0 ? undefined : gcv(inp25),
       parent: gcv(inp26).length === 0 ? undefined : gcv(inp26),
     };
-    let res = await axios.put(`${config.url}/bochiq/${teacherId}`, data, {
+    let res = await axios.put(`${config.url}/BO/${teacherId}`, data, {
       headers: {
         authorization: window.localStorage.getItem("token"),
       },
@@ -199,7 +194,7 @@ export default ({ th, spTeacher }) => {
     inp26.current.value = "";
   };
   const delTeacher = async (id) => {
-    let res = await axios.delete(`${config.url}/bochiq/${id}`, {
+    let res = await axios.delete(`${config.url}/BO/${id}`, {
       headers: {
         authorization: window.localStorage.getItem("token"),
       },
@@ -208,13 +203,9 @@ export default ({ th, spTeacher }) => {
       alert(res.data.title);
     }
     window.location.reload();
+    // backdrop2()
   };
   const addTeacher = async () => {
-    setShowMessage(true); // xabar ko'rsatish
-
-    setTimeout(() => {
-      setShowMessage(false); 
-    }, 1000);
     if (
       gcv(inp1) &&
       gcv(inp2) &&
@@ -271,16 +262,13 @@ export default ({ th, spTeacher }) => {
         position2: gcv(inp25),
         parent: gcv(inp26),
       };
-      const openAddModal = () => {
-        setBackdrop(true);
-      }
-      let res = await axios.post(`${config.url}/bochiq`, data, {
+      let res = await axios.post(`${config.url}/BO`, data, {
         headers: {
           authorization: window.localStorage.getItem("token"),
         },
       });
       // window.location.reload();
-      backdrop2()
+      backdrop2();
       // backdrop2()
 
       if (res.data.title === "Продукт добавлен в систему✅") {
@@ -317,50 +305,12 @@ export default ({ th, spTeacher }) => {
       alert("Barcha maydonlarni to`ldiring...");
     }
   };
-  
   const [category, setCategory] = useState("");
-  const changeStatus = async (e, id) => {
-        setShowMessage(true)
 
-        setTimeout(() => {
-          setShowMessage(false); 
-        }, 1000);
-    let res = await axios.put(`${config.url}/bochiq/${id}`,
-      { a: "opened" },
-      {
-        headers: {
-          authorization: window.localStorage.getItem("token"),
-        }
-      },)
-  }
   return (
     <>
-      <div className="isisis">
-      <a
-                    onClick={(e) => {
-                      qwe(e, "closed")
-                    }}
-                    data-modal-target="post-modal"
-                    data-modal-toggle="post-modal"
-                    href="#"
-                    className="post-medium isis text-lg text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    {/* <i className="fa-solid fa-square-plus"></i> */}
-                    <button onClick={() => {
-    handleButtonClick();
-    // backdrop1();
-    // window.location.reload();
-  }} className="addposition">
-                      Подвердить
-                    </button>
-                    {/* {spTeacher._id} */}
-                  </a>
-      </div>
-      {showMessage && (
-        <div className="gggg">
-          Добавлен
-        </div>
-      )}
+      {/* <h1 className="h10">Все продукты</h1> */}
+
       <table className="table w-full text-sm text-left text-gray-500">
         <thead className="text-xs text-gray-700 text-gray-400 uppercase bg-gray-200">
           <tr>
@@ -381,7 +331,6 @@ export default ({ th, spTeacher }) => {
         </thead>
         <tbody className="wer">
           {data.map((item, i) => {
-          console.log(item);
             return (
               <tr
                 key={item._id}
@@ -393,11 +342,24 @@ export default ({ th, spTeacher }) => {
                 >
                   {i + 1}
                 </th>
-                <td className="px-6 py-2">{item.position1}</td>
-                <td className="px-6 py-2">{item.position2}</td>
-                <td className="px-6 py-2"><input className="zxc mx-auto mb-3 w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input></td>
-                {/* <td className="px-6 py-2"><input data-id={item._id} ref={el => itemsRef.current[i] = {...el,id:item._id}} className="zxc mx-auto mb-3 w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input></td> */}
-                <td className="px-6 py-2 pluss2 text-right w-52"></td>
+                <td className="px-6 py-2">{item.name}</td>
+                <td className="px-6 py-2 pluss2 text-right w-20">
+                  <a
+                    // onClick={prof1}
+                    // onClickCapture={() => {
+                    //   spTeacherFunc(item._id);
+                    // }}
+                    onClick={(e) => {
+                      getName1(e, item._id);
+                    }}
+                    data-modal-target="profile-modal"
+                    data-modal-toggle="profile-modal"
+                    href="#"
+                    className="font-medium mr-9 listclass text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    <i className="fa-solid fa-list"></i>
+                  </a>
+                </td>
               </tr>
             );
           })}
@@ -449,9 +411,8 @@ export default ({ th, spTeacher }) => {
                       className="custom-select opt shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md"
                       aria-label=".form-select-lg example"
                       required=""
-                      value={value}
-                      onChange={handleChange}
-
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
                     >
                       <option value="" disabled>
                         Вид...
@@ -468,7 +429,6 @@ export default ({ th, spTeacher }) => {
                       className="custom-select opt shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md"
                       aria-label=".form-select-lg example"
                       required=""
-                      value={12}
                     >
                       {/* <option>Категория...</option> */}
 
@@ -573,10 +533,11 @@ export default ({ th, spTeacher }) => {
                       ref={inp7}
                       type="text"
                       id="simple-search"
+                      // value={inp7.name}
+                      // defaultValue="spTeacher.name"
                       className="mx-auto mb-3 w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Название"
                       required=""
-                      value={13}
                     />
                   </div>
                   <div className="w-full text-center ml-1 row d-flex justify-between mb-5">
@@ -588,7 +549,6 @@ export default ({ th, spTeacher }) => {
                         className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Ид номер"
                         required=""
-                        value={13}
                       />
                     </div>
                     <div className="col-12 mb-5 col-md-8">
@@ -599,11 +559,10 @@ export default ({ th, spTeacher }) => {
                         className="mx-auto w-full innnn max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="№ Н/Д"
                         required=""
-                        value={13}
                       />
                     </div>
                   </div>
-                  <div className="oddd">
+                  <div className="oddd hidden">
                     <select
                       ref={inp1}
                       id="simple-search"
@@ -644,7 +603,7 @@ export default ({ th, spTeacher }) => {
                       aria-label=".form-select-lg example"
                       required=""
                     >
-                      <option className="soption" value="position">
+                      <option className="soption" value="element">
                         inp4
                       </option>
                     </select>
@@ -809,8 +768,8 @@ export default ({ th, spTeacher }) => {
                       aria-label=".form-select-lg example"
                       required=""
                     >
-                      <option className="soption" value={spTeacher.position1}>
-                        {spTeacher.position1}
+                      <option className="soption" value="chilon">
+                        inp24
                       </option>
                     </select>
                     <select
@@ -820,8 +779,8 @@ export default ({ th, spTeacher }) => {
                       aria-label=".form-select-lg example"
                       required=""
                     >
-                      <option className="soption" value={spTeacher.position2}>
-                        {spTeacher.position2}
+                      <option className="soption" value="chilon">
+                        inp25
                       </option>
                     </select>
                     <select
@@ -831,8 +790,8 @@ export default ({ th, spTeacher }) => {
                       aria-label=".form-select-lg example"
                       required=""
                     >
-                      <option className="soption" value={spTeacher._id}>
-                        {spTeacher._id}
+                      <option className="soption" value="nonee">
+                        nonee
                       </option>
                     </select>
                   </div>
@@ -863,7 +822,6 @@ export default ({ th, spTeacher }) => {
           aria-modal="true"
           role="dialog"
         >
-
           <div className="relative w-11/12 max-h-full">
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <button
@@ -892,13 +850,14 @@ export default ({ th, spTeacher }) => {
                   <div className="teacher flex justify-end px-4 pt-4"></div>
                   <div className=" pb-10">
                     <table className="w-full">
-                      <thead className="theadd">
-                        <th className="theadd1">{spTeacher.name}a</th>
-                        <th>
-                          {/* Дата создания : {formatDate("saloooom")} */}
-                        </th>
-                      </thead>
+                      <div className="listt">
+                        <h1 className="h11">{window.localStorage.getItem("forchildren")}</h1>
+                      <Botkritie/>
+
+                        <br></br>
+                      </div>
                     </table>
+
                     {backdropp && (
                       <div
                         id="post-modal"
@@ -932,7 +891,7 @@ export default ({ th, spTeacher }) => {
                             </button>
                             <div className="w-full px-6 py-6 lg:px-8">
                               <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
-                                Добавить позицию к продукту1
+                                Добавить позицию к продукту
                               </h3>
                               <label
                                 htmlFor="simple-search"
@@ -956,7 +915,6 @@ export default ({ th, spTeacher }) => {
                                       className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                       placeholder="Наименование показателя"
                                       required=""
-                                      value={11}
                                     />
                                   </div>
                                   <div className="col-12 mb-5 col-md-6">
@@ -967,17 +925,16 @@ export default ({ th, spTeacher }) => {
                                       className="mx-auto w-full innnn max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                       placeholder="Норма"
                                       required=""
-                                      value={11}
                                     />
                                   </div>
                                 </div>
                               </form>
-                              <form className="flex items-center gap-16 mb-5">
-                                <div className="w-full">
+                              <form className="flex items-center hidden gap-16 mb-5">
+                                <div className="w-full hidden">
                                   <div className="col-12 mb-5 col-md-6">
                                     <input
                                       ref={inp26}
-                                      value={111}
+                                      value={spTeacher._id}
                                       type="text"
                                       id="simple-search"
                                       className="mx-auto w-full innnn max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -992,7 +949,7 @@ export default ({ th, spTeacher }) => {
                                     className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="11111"
                                     required=""
-                                    value={111}
+                                    value={spTeacher.name}
                                   />
                                   <input
                                     ref={inp8}
@@ -1001,7 +958,7 @@ export default ({ th, spTeacher }) => {
                                     className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="11111"
                                     required=""
-                                    value={111}
+                                    value={spTeacher.nameId}
                                   />
                                   <input
                                     ref={inp9}
@@ -1010,7 +967,7 @@ export default ({ th, spTeacher }) => {
                                     className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="11111"
                                     required=""
-                                    value={111}
+                                    value={spTeacher.norma}
                                   />
                                   <select
                                     ref={inp10}
@@ -1021,9 +978,9 @@ export default ({ th, spTeacher }) => {
                                   >
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value={spTeacher.type}
                                     >
-                                      333
+                                      Tanlang...
                                     </option>
                                   </select>
                                   <select
@@ -1035,9 +992,9 @@ export default ({ th, spTeacher }) => {
                                   >
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value={spTeacher.group}
                                     >
-                                      333
+                                      Tanlang...
                                     </option>
                                   </select>
                                   <select
@@ -1047,11 +1004,8 @@ export default ({ th, spTeacher }) => {
                                     aria-label=".form-select-lg example"
                                     required=""
                                   >
-                                    <option
-                                      className="soption"
-                                      value={3333}
-                                    >
-                                      333
+                                    <option className="soption" value="none">
+                                      Tanlang...
                                     </option>
                                   </select>
                                   <select
@@ -1061,23 +1015,20 @@ export default ({ th, spTeacher }) => {
                                     aria-label=".form-select-lg example"
                                     required=""
                                   >
-                                    <option
-                                      className="soption"
-                                      value={3333}
-                                    >
-                                      333
+                                    <option className="soption" value="none">
+                                      Tanlang...
                                     </option>
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value="Proizvodstvo xodimi"
                                     >
-                                      333
+                                      Proizvodstvo xodimi
                                     </option>
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value="Laboratoriya xodimi"
                                     >
-                                      333
+                                      Laboratoriya xodimi
                                     </option>
                                   </select>
                                   <select
@@ -1087,11 +1038,20 @@ export default ({ th, spTeacher }) => {
                                     aria-label=".form-select-lg example"
                                     required=""
                                   >
+                                    <option className="soption" value="none">
+                                      Tanlang...
+                                    </option>
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value="Proizvodstvo xodimi"
                                     >
-                                      333
+                                      Proizvodstvo xodimi
+                                    </option>
+                                    <option
+                                      className="soption"
+                                      value="Laboratoriya xodimi"
+                                    >
+                                      Laboratoriya xodimi
                                     </option>
                                   </select>
                                   <select
@@ -1101,11 +1061,20 @@ export default ({ th, spTeacher }) => {
                                     aria-label=".form-select-lg example"
                                     required=""
                                   >
+                                    <option className="soption" value="none">
+                                      Tanlang...
+                                    </option>
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value="Proizvodstvo xodimi"
                                     >
-                                      333
+                                      Proizvodstvo xodimi
+                                    </option>
+                                    <option
+                                      className="soption"
+                                      value="Laboratoriya xodimi"
+                                    >
+                                      Laboratoriya xodimi
                                     </option>
                                   </select>
                                   <select
@@ -1117,9 +1086,21 @@ export default ({ th, spTeacher }) => {
                                   >
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value={spTeacher._id}
                                     >
-                                      333
+                                      Tanlang...
+                                    </option>
+                                    <option
+                                      className="soption"
+                                      value="Proizvodstvo xodimi"
+                                    >
+                                      Proizvodstvo xodimi
+                                    </option>
+                                    <option
+                                      className="soption"
+                                      value="Laboratoriya xodimi"
+                                    >
+                                      Laboratoriya xodimi
                                     </option>
                                   </select>
                                   <select
@@ -1129,11 +1110,20 @@ export default ({ th, spTeacher }) => {
                                     aria-label=".form-select-lg example"
                                     required=""
                                   >
+                                    <option className="soption" value="none">
+                                      Tanlang...
+                                    </option>
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value="Proizvodstvo xodimi"
                                     >
-                                      333
+                                      Proizvodstvo xodimi
+                                    </option>
+                                    <option
+                                      className="soption"
+                                      value="Laboratoriya xodimi"
+                                    >
+                                      Laboratoriya xodimi
                                     </option>
                                   </select>
                                   <select
@@ -1143,11 +1133,20 @@ export default ({ th, spTeacher }) => {
                                     aria-label=".form-select-lg example"
                                     required=""
                                   >
+                                    <option className="soption" value="none">
+                                      Tanlang...
+                                    </option>
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value="Proizvodstvo xodimi"
                                     >
-                                      333
+                                      Proizvodstvo xodimi
+                                    </option>
+                                    <option
+                                      className="soption"
+                                      value="Laboratoriya xodimi"
+                                    >
+                                      Laboratoriya xodimi
                                     </option>
                                   </select>
                                   <select
@@ -1157,11 +1156,20 @@ export default ({ th, spTeacher }) => {
                                     aria-label=".form-select-lg example"
                                     required=""
                                   >
+                                    <option className="soption" value="none">
+                                      Tanlang...
+                                    </option>
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value="Proizvodstvo xodimi"
                                     >
-                                      333
+                                      Proizvodstvo xodimi
+                                    </option>
+                                    <option
+                                      className="soption"
+                                      value="Laboratoriya xodimi"
+                                    >
+                                      Laboratoriya xodimi
                                     </option>
                                   </select>
                                   <select
@@ -1171,11 +1179,20 @@ export default ({ th, spTeacher }) => {
                                     aria-label=".form-select-lg example"
                                     required=""
                                   >
+                                    <option className="soption" value="none">
+                                      Tanlang...
+                                    </option>
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value="Proizvodstvo xodimi"
                                     >
-                                      333
+                                      Proizvodstvo xodimi
+                                    </option>
+                                    <option
+                                      className="soption"
+                                      value="Laboratoriya xodimi"
+                                    >
+                                      Laboratoriya xodimi
                                     </option>
                                   </select>
                                   <select
@@ -1185,11 +1202,20 @@ export default ({ th, spTeacher }) => {
                                     aria-label=".form-select-lg example"
                                     required=""
                                   >
+                                    <option className="soption" value="none">
+                                      Tanlang...
+                                    </option>
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value="Proizvodstvo xodimi"
                                     >
-                                      333
+                                      Proizvodstvo xodimi
+                                    </option>
+                                    <option
+                                      className="soption"
+                                      value="Laboratoriya xodimi"
+                                    >
+                                      Laboratoriya xodimi
                                     </option>
                                   </select>
                                   <select
@@ -1199,11 +1225,20 @@ export default ({ th, spTeacher }) => {
                                     aria-label=".form-select-lg example"
                                     required=""
                                   >
+                                    <option className="soption" value="none">
+                                      Tanlang...
+                                    </option>
                                     <option
                                       className="soption"
-                                      value={3333}
+                                      value="Proizvodstvo xodimi"
                                     >
-                                      333
+                                      Proizvodstvo xodimi
+                                    </option>
+                                    <option
+                                      className="soption"
+                                      value="Laboratoriya xodimi"
+                                    >
+                                      Laboratoriya xodimi
                                     </option>
                                   </select>
                                   <select
@@ -1212,12 +1247,7 @@ export default ({ th, spTeacher }) => {
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required=""
                                   >
-                                    <option
-                                      className="soption"
-                                      value={3333}
-                                    >
-                                      333
-                                    </option>
+                                    <option value="ism">Xodim</option>
                                   </select>
                                   <select
                                     ref={inp2}
@@ -1225,72 +1255,48 @@ export default ({ th, spTeacher }) => {
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required=""
                                   >
-                                    <option
-                                      className="soption"
-                                      value={3333}
-                                    >
-                                      333
-                                    </option>                                  </select>
+                                    <option value="fam">Xodim</option>
+                                  </select>
                                   <select
                                     ref={inp3}
                                     id="simple-search"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required=""
                                   >
-                                    <option
-                                      className="soption"
-                                      value={3333}
-                                    >
-                                      333
-                                    </option>                                  </select>
+                                    <option value="log">Xodim</option>
+                                  </select>
                                   <select
                                     ref={inp4}
                                     id="simple-search"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required=""
                                   >
-                                    <option
-                                      className="soption"
-                                      value={3333}
-                                    >
-                                      333
-                                    </option>                                  </select>
+                                    <option value="position">position</option>
+                                  </select>
                                   <select
                                     ref={inp5}
                                     id="simple-search"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required=""
                                   >
-                                    <option
-                                      className="soption"
-                                      value={3333}
-                                    >
-                                      333
-                                    </option>                                  </select>
+                                    <option value="created">Xodim</option>
+                                  </select>
                                   <select
                                     ref={inp6}
                                     id="simple-search"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required=""
                                   >
-                                    <option
-                                      className="soption"
-                                      value={3333}
-                                    >
-                                      333
-                                    </option>                                  </select>
+                                    <option value="pass">Xodim</option>
+                                  </select>
                                   <select
                                     ref={inp23}
                                     id="simple-search"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required=""
                                   >
-                                    <option
-                                      className="soption"
-                                      value={333}
-                                    >
-                                      333
-                                    </option>                                  </select>
+                                    <option value="chilon">Xodim</option>
+                                  </select>
                                 </div>
                               </form>
 
@@ -1315,7 +1321,8 @@ export default ({ th, spTeacher }) => {
                         className="bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40"
                       ></div>
                     )}
-                    <Bochiquchun />
+                    {/* org */}
+                    {/* <DobavitChilonPos /> */}
 
                     {/* <p className="mb-1 text-xl  text-gray-900 dark:text-white">
                       <strong>Название : </strong>
@@ -1400,8 +1407,8 @@ export default ({ th, spTeacher }) => {
                       className="custom-select opt shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md"
                       aria-label=".form-select-lg example"
                       required=""
-                      value={value}
-                      onChange={handleChange}
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
                     >
                       <option value="" disabled>
                         Вид...
@@ -1418,7 +1425,6 @@ export default ({ th, spTeacher }) => {
                       className="custom-select opt shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md"
                       aria-label=".form-select-lg example"
                       required=""
-                      value={12}
                     >
                       {/* <option>Категория...</option> */}
 
@@ -1526,7 +1532,6 @@ export default ({ th, spTeacher }) => {
                       className="mx-auto mb-3 w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Название"
                       required=""
-                      value={13}
                     />
                   </div>
                   <div className="w-full text-center ml-1 row d-flex justify-between mb-5">
@@ -1538,7 +1543,6 @@ export default ({ th, spTeacher }) => {
                         className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Ид номер"
                         required=""
-                        value={13}
                       />
                     </div>
                     <div className="col-12 mb-5 col-md-8">
@@ -1549,12 +1553,11 @@ export default ({ th, spTeacher }) => {
                         className="mx-auto w-full innnn max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="№ Н/Д"
                         required=""
-                        value={13}
                       />
                     </div>
                   </div>
                 </form>
-                <form className="flex items-center gap-16 mb-5">
+                <form className="flex items-center hidden gap-16 mb-5">
                   <div className="w-full">
                     <select
                       ref={inp12}
@@ -1744,7 +1747,7 @@ export default ({ th, spTeacher }) => {
                       </option>
                     </select>
                   </div>
-                  <div className="w-full">
+                  <div className="w-full hidden">
                     <select
                       ref={inp1}
                       id="simple-search"
@@ -1775,7 +1778,7 @@ export default ({ th, spTeacher }) => {
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required=""
                     >
-                      <option value="position">position</option>
+                      <option value="element">element</option>
                     </select>
                     <select
                       ref={inp5}
@@ -1807,7 +1810,7 @@ export default ({ th, spTeacher }) => {
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required=""
                     >
-                      <option value={spTeacher.position1}>{spTeacher.position1}</option>
+                      <option value="none">Xodim</option>
                     </select>
                     <select
                       ref={inp25}
@@ -1815,7 +1818,7 @@ export default ({ th, spTeacher }) => {
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required=""
                     >
-                      <option value={spTeacher.position2}>{spTeacher.position2}</option>
+                      <option value="none">Xodim</option>
                     </select>
                     <select
                       ref={inp26}
@@ -1823,7 +1826,7 @@ export default ({ th, spTeacher }) => {
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       required=""
                     >
-                      <option value={spTeacher._id}>{spTeacher._id}</option>
+                      <option value="nonee">nonee</option>
                     </select>
                   </div>
                 </form>

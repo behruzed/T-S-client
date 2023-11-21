@@ -2,9 +2,10 @@ import { useRef, useState } from "react";
 import config from "../../qwe/config";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-
+// import gif from '../../images/kOnyz.gif';
 import "./sign.css";
 import wasat from "../../images/wasat.jpg";
+import loading from "../../images/loading.gif";
 
 function SignIn() {
   const [spiner, setSpiner] = useState(false);
@@ -22,7 +23,7 @@ function SignIn() {
       setSpiner(true);
       setTimeout(() => {
         setSpiner(false);
-      }, 4000);
+      }, 100000);
       let user = {
         email: gcv(inp1),
         password: gcv(inp2),
@@ -71,16 +72,20 @@ function SignIn() {
     <>
       <div>
         <main className="bg-white h-screen">
+            
+
           {spiner && (
             <div className="lds-roller">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
+              <div className="salomdiv row">
+              <div className="col-12 eerr">
+              <img src={loading} className="lldd eerr text-center" alt="Loading gif" />
+                </div>
+                <div className="col-12">
+                Пожалуйста, подождите...
+              <br></br>
+Подключение к серверу
+                </div>
+</div>
             </div>
           )}
           <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">

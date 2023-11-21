@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import config from "../../../qwe/config";
-import Table from "./BotkritieTable";
+import Table from "./BOT";
 import '../style.css'
 import React from "react";
 
-function BotkritieForchildren({fn}) {
-    let [Bochiq, setItem] = useState([])
+function BO() {
+    let [BO, setItem] = useState([])
     let [spTeacher, setSpTecher] = useState([])
     const [darkMode, setDarkMode] = useState(true);
 
@@ -15,7 +15,7 @@ function BotkritieForchildren({fn}) {
     };
 
     const checkHuman = async (id) => {
-        let res = await axios.get(`${config.url}/Bochiq/${id}`, {
+        let res = await axios.get(`${config.url}/BO/${id}`, {
             headers: {
                 authorization: window.localStorage.getItem("token")
             }
@@ -25,7 +25,7 @@ function BotkritieForchildren({fn}) {
     };
 
     const fetchTecher = async () => {
-        let res = await axios.get(`${config.url}/Bochiq`, {
+        let res = await axios.get(`${config.url}/BO`, {
             headers: {
                 authorization: window.localStorage.getItem("token")
             }
@@ -44,9 +44,9 @@ function BotkritieForchildren({fn}) {
         <>
             <div>
                 <div className="bg-white dark:bg-gray-900">
-                <div className="container w-8/12 mx-auto py-12">
+                <div className="container w-full mx-auto py-12">
                         <div className="relative overflow-x-auto sm:rounded-lg">
-                        <Table fn={fn} data={Bochiq} th={["Название"]} spTeacherFunc={checkHuman} spTeacher={spTeacher} />
+                        <Table data={BO} th={["Название"]} spTeacherFunc={checkHuman} spTeacher={spTeacher} />
                         </div>
                     </div>
                 </div>
@@ -55,4 +55,4 @@ function BotkritieForchildren({fn}) {
     )
 }
 
-export default BotkritieForchildren
+export default BO

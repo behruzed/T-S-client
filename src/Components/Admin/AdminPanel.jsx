@@ -52,7 +52,7 @@ function AdminPanel() {
 
   return (
     <>
-      <div className="row mainrow">
+      <div className="row mainrow adpanel">
         <div className="col-0 bg-dark col-md-2">a</div>
         <div className="chap col-0 col-md-2">
           <Aside />

@@ -23,23 +23,23 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
   const handleButtonClick = () => {
     console.log("a");
     setShowMessage(true);
-    
+
     setTimeout(() => {
-      setShowMessage(false); 
+      setShowMessage(false);
     }, 1000);
   }
   useEffect(() => {
-    if(showMessage) {
+    if (showMessage) {
       const timeout = setTimeout(() => {
         setShowMessage(false);
       }, 1000);
-  
-      return () => clearTimeout(timeout); 
+
+      return () => clearTimeout(timeout);
     }
   }, [showMessage]);
-  async function qwe1(q){
-    if(q.current.length>0){
-       q.current.forEach(async(element) => {
+  async function qwe1(q) {
+    if (q.current.length > 0) {
+      q.current.forEach(async (element) => {
         const data = [
           {
             id: element.id,
@@ -51,7 +51,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
             // parName: ref1.current.value
           },
         ]
-        let res = await axios.put(`${config.url}/addstatusotkritie/change`,{data},
+        let res = await axios.put(`${config.url}/addstatusotkritie/change`, { data },
           {
             headers: {
               authorization: window.localStorage.getItem("token"),
@@ -324,41 +324,41 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
   };
   const [category, setCategory] = useState("");
   async function qwe(e, status) {
-    
+
     // backdrop2
   }
   let ref1 = useRef()
   return (
     <>
-{showMessage && (
-  <div className="gggg">
-    Заявка отправлена
-  </div>
-)}
+      {showMessage && (
+        <div className="gggg">
+          Заявка отправлена
+        </div>
+      )}
 
       <div className="posta mmm d-flex">
         <div></div>
-                  <a
-                    onClick={(e) => {
-                      qwe(e, "closed")
-                    }}
-                    data-modal-target="post-modal"
-                    data-modal-toggle="post-modal"
-                    href="#"
-                    className="post-medium text-lg text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    {/* <i className="fa-solid fa-square-plus"></i> */}
-                    <button onClick={() => {
-    handleButtonClick();
-    // backdrop1();
-    window.location.reload();
-  }} className="addposition">
-                      Подвердить
-                    </button>
-                    {/* {spTeacher._id} */}
-                  </a>
-                </div>
-                <Botkritie fn={qwe1}/>
+        <a
+          onClick={(e) => {
+            qwe(e, "closed")
+          }}
+          data-modal-target="post-modal"
+          data-modal-toggle="post-modal"
+          href="#"
+          className="post-medium text-lg text-blue-600 dark:text-blue-500 hover:underline"
+        >
+          {/* <i className="fa-solid fa-square-plus"></i> */}
+          <button onClick={() => {
+            handleButtonClick();
+            // backdrop1();
+            window.location.reload();
+          }} className="addposition">
+            Подвердить
+          </button>
+          {/* {spTeacher._id} */}
+        </a>
+      </div>
+      <Botkritie fn={qwe1} />
       {edit && (
         <div
           id="authentication-modal"

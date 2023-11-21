@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import config from "../../../qwe/config"
 import Posss from "./Posss";
 import "../style.css";
-import Botkritie from "./Botkritie"
+import BO from "./BO"
 
 const formatDate = (dateStr) => {
   const date = new Date(dateStr);
@@ -26,6 +26,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
     setTimeout(() => {
       setShowMessage(false); 
     }, 1000);
+
   }
   useEffect(() => {
     if(showMessage) {
@@ -63,15 +64,20 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
   const getName1 = async (e, id) => {
     let qwe = await spTeacherFunc(id)
     window.localStorage.setItem("nom", qwe._id);
+    window.localStorage.setItem("forchildren", qwe.name);
+    console.log(qwe.name)
 
-    let data1 = await axios.get(`${config.url}/pos/?parent=${window.localStorage.getItem("nom")}`,
+    let data1 = await axios.get(
+      `${config.url}/addstatusotkritie/?forchildren=${window.localStorage.getItem("forchildren")}&parent=${window.localStorage.getItem("nom")}`,
       {
         headers: {
           authorization: window.localStorage.getItem("token")
         }
-      });
+      }
+    );
     prof1()
   };
+
   const [edit, setEdit] = useState(false);
   const [prof, setProf] = useState(false);
   const [backdrop, setBackdrop] = useState(false);
@@ -324,21 +330,24 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
   };
   const [category, setCategory] = useState("");
   async function qwe(e, status) {
+    // backdrop2
+    console.log(e);
     let res = await axios.put(`${config.url}/addstatusotkritie/change`,
       {
         statusFrom: status,
-        closedBy: window.localStorage.getItem("person"),
         status: "zakritie",
+        openedBy: window.localStorage.getItem("person"),
+        parName: ref1.current.value,
+        nom: window.localStorage.getItem("nom")
       },
       {
         headers: {
           authorization: window.localStorage.getItem("token"),
         }
       },)
-    console.log(res.config.data);
+    console.log(res);
   }
-  // async function qwe(e, status) {
-  //   }
+
   let ref1 = useRef()
   return (
     <>
@@ -352,7 +361,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
         <div></div>
                   <a
                     onClick={(e) => {
-                      qwe(e, "closed")
+                      qwe(e, "closed"), handleButtonClick();
                     }}
                     data-modal-target="post-modal"
                     data-modal-toggle="post-modal"
@@ -370,7 +379,8 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
                     {/* {spTeacher._id} */}
                   </a>
                 </div>
-                <Botkritie fn={qwe1}/>
+                {/* <Botkritie fn={qwe1}/> */}
+                <BO/>
       {edit && (
         <div
           id="authentication-modal"
