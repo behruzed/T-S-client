@@ -23,7 +23,7 @@ function SignIn() {
       setSpiner(true);
       setTimeout(() => {
         setSpiner(false);
-      }, 100000);
+      }, 3000);
       let user = {
         email: gcv(inp1),
         password: gcv(inp2),

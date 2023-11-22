@@ -7,6 +7,8 @@
     width: 100px;
 }
 .lds-roller {
+  animation-name: loadanim;
+  animation-duration: .5s;
     border-radius: 39px;
 background: #e0e0e0;
 box-shadow:  -15px 15px 33px #c5c5c5,
@@ -25,7 +27,21 @@ box-shadow:  -15px 15px 33px #c5c5c5,
     color: black;
     background-color: rgba(255, 255, 255, 0.781); /* Orqa fon rangi va transparensiyasi */
   }
-  
+  @keyframes loadanim {
+    0%{
+      background-color: black;
+      color: #fff;
+      transform: scale(0);
+      width: 10px;
+      height: 10px;
+    }
+    30%{
+      background-color: #fff;
+    }
+  100%{
+
+    }
+  }
   .eerr{
     text-align: center !important;
     align-items: center !important;

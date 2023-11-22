@@ -128,7 +128,8 @@ box-shadow:  -1px 1px 5px gray;
     text-align: start;
     width: 100%;
     display: block;
-    padding: 7px;
+    padding: 6px;
+    font-size: .9rem;
     transition: all .1s ease-out;
 }
 .hovred:hover{
@@ -142,7 +143,7 @@ box-shadow:  -1px 1px 5px gray;
     box-shadow: -3px 3px 2px gray;
     background-color: rgb(4, 4, 95);
     color: white;
-    transform: translate(3px, -3px);
+    transform: translate(4px, -4px);
 }
 .chapbutton:active{
     transform: translate(-3px, 3px);
@@ -150,6 +151,8 @@ box-shadow:  -1px 1px 5px gray;
 
 
 .chap {
+    overflow-y: auto;
+    overflow-x: hidden;
     padding-right: 0px !important;
     padding-top: 10px;
     height: 100vh;
@@ -201,7 +204,7 @@ box-shadow:  -1px 1px 5px gray;
 
 }
 .chap .rasm > a img {
-    width: 8rem;
+    width: 6rem;
 }
 .rightrow{
     display: flex !important;

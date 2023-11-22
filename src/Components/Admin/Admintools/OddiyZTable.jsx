@@ -323,28 +323,6 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
   </div>
 )}
 
-      <div className="posta mmm d-flex">
-        <div></div>
-                  <a
-                    onClick={(e) => {
-                      qwe(e, "zakritie")
-                    }}
-                    data-modal-target="post-modal"
-                    data-modal-toggle="post-modal"
-                    href="#"
-                    className="post-medium text-lg text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    {/* <i className="fa-solid fa-square-plus"></i> */}
-                    <button onClick={() => {
-    handleButtonClick();
-    // backdrop1();
-    window.location.reload();
-  }} className="addposition">
-                      Архивировать
-                    </button>
-                    {/* {spTeacher._id} */}
-                  </a>
-                </div>
                 <Bzakritie />
       {edit && (
         <div
