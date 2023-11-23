@@ -336,16 +336,20 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
   }
   let ref1 = useRef()
 
-  const clickToNotify = ()=>{
-    addNotification({
+  const clickToNotify = () => {
+    const twentyFourHours = 24 * 60 * 60 * 1000; // 24 soatni millisekundga aylantiramiz
+  
+    setTimeout(() => {
+      addNotification({
         title: "Sizga yangi xabar keldi",
         message: "Ariza qoldirildi. Tasdiqlash uchun bosing...",
-        duration: 86400000, // 24 soat uchun
+        duration: 0,
         icon: logo,
         native: true,
-        onClick: ()=> window.location =  "/ochiq-arizalar"
-    })
-}
+        onClick: () => (window.location = "/ochiq-arizalar"),
+      });
+    }, twentyFourHours);
+  };
 
 
 
