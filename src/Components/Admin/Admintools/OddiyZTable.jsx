@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import config from "../../../qwe/config"
-import PosssZ from "./PosssZ";
+import Posss from "./Posss";
 import "../style.css";
-import Bzakritie from "./Bzakritie"
+import BZ from "./BZ"
 
 const formatDate = (dateStr) => {
   const date = new Date(dateStr);
@@ -16,6 +16,8 @@ const formatDate = (dateStr) => {
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 export default ({ data, th, spTeacherFunc, spTeacher }) => {
+  let [Botkritie1, setItem] = useState([])
+  const itemsRef = useRef([]);
 
   const [showMessage, setShowMessage] = useState(false);
   const handleButtonClick = () => {
@@ -24,6 +26,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
     setTimeout(() => {
       setShowMessage(false); 
     }, 1000);
+
   }
   useEffect(() => {
     if(showMessage) {
@@ -34,18 +37,47 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
       return () => clearTimeout(timeout); 
     }
   }, [showMessage]);
+  async function qwe1(q){
+    if(q.current.length>0){
+       q.current.forEach(async(element) => {
+        console.log(q);
+        const data = [
+          {
+            id: element.id,
+            statusFrom: "closed",
+            // 111
+            status: "zakritie",
+            closedBy: window.localStorage.getItem("person"),
+            // commentByOpener: element.value,
+          },
+        ]
+        let res = await axios.put(`${config.url}/addstatuszakritie/change`,{data},
+          {
+            headers: {
+              authorization: window.localStorage.getItem("token"),
+            }
+          },)
+      })
+    }
+  }
+  
   const getName1 = async (e, id) => {
     let qwe = await spTeacherFunc(id)
     window.localStorage.setItem("nom", qwe._id);
+    window.localStorage.setItem("forchildren", qwe.name);
+    console.log(qwe.name)
 
-    let data1 = await axios.get(`${config.url}/pos/?parent=${window.localStorage.getItem("nom")}`,
+    let data1 = await axios.get(
+      `${config.url}/addstatuszakritie/?forchildren=${window.localStorage.getItem("forchildren")}&parent=${window.localStorage.getItem("nom")}`,
       {
         headers: {
           authorization: window.localStorage.getItem("token")
         }
-      });
+      }
+    );
     prof1()
   };
+
   const [edit, setEdit] = useState(false);
   const [prof, setProf] = useState(false);
   const [backdrop, setBackdrop] = useState(false);
@@ -296,16 +328,17 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
       alert("Barcha maydonlarni to`ldiring...");
     }
   };
-  const [category, setCategory] = useState(""); 
-
+  const [category, setCategory] = useState("");
   async function qwe(e, status) {
+    // backdrop2
     console.log(e);
     let res = await axios.put(`${config.url}/addstatuszakritie/change`,
       {
         statusFrom: status,
-        archivedBy: window.localStorage.getItem("person"),
-        status: "arxiv",
-        // parName: ref1.current.value
+        status: "zakritie",
+        openedBy: window.localStorage.getItem("person"),
+        parName: ref1.current.value,
+        nom: window.localStorage.getItem("nom")
       },
       {
         headers: {
@@ -314,6 +347,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
       },)
     console.log(res);
   }
+
   let ref1 = useRef()
   return (
     <>
@@ -323,7 +357,8 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
   </div>
 )}
 
-                <Bzakritie />
+                {/* <Botkritie fn={qwe1}/> */}
+                <BZ/>
       {edit && (
         <div
           id="authentication-modal"
@@ -1274,7 +1309,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
                         className="bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40"
                       ></div>
                     )}
-                    <PosssZ />
+                    <Posss />
 
                     {/* <p className="mb-1 text-xl  text-gray-900 dark:text-white">
                       <strong>Название : </strong>

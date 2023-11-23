@@ -1,8 +1,6 @@
 import RouteSignIn from "./Routes/RouteSignIn"
 import AdminPanel from "./Components/Admin/AdminPanel";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
-
 import RouteAdmin from "./Routes/Admin/RouteAdmin"
 // import RouteLab from "./Routes/ALab/RouteLab"
 // import RouteLabNach from "./Routes/ALabNach/RouteLabNach"
@@ -13,11 +11,13 @@ import RouteAdmin from "./Routes/Admin/RouteAdmin"
 // import RouteTexnolog from "./Routes/ATexnolog/RouteTexnolog"
 
 import Marqu from './Components/Admin/Admintools/Marqu'
+import Notificationtest from "./Components/Notificationtest";
 
 function App() {
   return (
     <> 
       <RouteAdmin />
+      <Notificationtest/>
       {/* <RouteLab/>
       <RouteLabNach/>
       <RoutePr/>

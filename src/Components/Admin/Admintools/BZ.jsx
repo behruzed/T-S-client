@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import config from "../../../qwe/config";
-import Table from "./BzakritieTable";
+import Table from "./BZT";
 import '../style.css'
 import React from "react";
 
-function Bzakritie({ fn }) {
-    let [Bzakritie, setItem] = useState([])
+function BZ() {
+    let [BZ, setItem] = useState([])
     let [spTeacher, setSpTecher] = useState([])
     const [darkMode, setDarkMode] = useState(true);
 
@@ -15,7 +15,7 @@ function Bzakritie({ fn }) {
     };
 
     const checkHuman = async (id) => {
-        let res = await axios.get(`${config.url}/Bzakritie/${id}`, {
+        let res = await axios.get(`${config.url}/BZ/${id}`, {
             headers: {
                 authorization: window.localStorage.getItem("token")
             }
@@ -25,7 +25,7 @@ function Bzakritie({ fn }) {
     };
 
     const fetchTecher = async () => {
-        let res = await axios.get(`${config.url}/Bzakritie`, {
+        let res = await axios.get(`${config.url}/BZ`, {
             headers: {
                 authorization: window.localStorage.getItem("token")
             }
@@ -44,9 +44,9 @@ function Bzakritie({ fn }) {
         <>
             <div>
                 <div className="bg-white dark:bg-gray-900">
-                    <div className="container w-full mx-auto py-12">
+                <div className="container w-full mx-auto py-12">
                         <div className="relative overflow-x-auto sm:rounded-lg">
-                            <Table fn={fn} data={Bzakritie} th={["Номер партии", "НАИМЕНОВАНИЕ ПОКАЗАТЕЛЯ", "НОРМА", "ЗНАЧЕНИЕ"]} spTeacherFunc={checkHuman} spTeacher={spTeacher} />
+                        <Table data={BZ} th={["Название"]} spTeacherFunc={checkHuman} spTeacher={spTeacher} />
                         </div>
                     </div>
                 </div>
@@ -55,4 +55,4 @@ function Bzakritie({ fn }) {
     )
 }
 
-export default Bzakritie
+export default BZ
