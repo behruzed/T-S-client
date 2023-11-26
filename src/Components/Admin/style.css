@@ -87,6 +87,25 @@
     margin-top: 5px;
     margin-left: 8px;
 }
+.filteranim img{
+    text-align: center !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto;
+    width: 80px;
+    margin-bottom: 5px;
+    display: fixed;
+    position: fixed;
+    z-index: 999;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+.filteranim{
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.521);
+    z-index: 999;
+}
 .moyul{
     margin: 20px;
     width: 50%;
@@ -166,7 +185,6 @@ box-shadow:  -1px 1px 5px gray;
     background-color: #4983f7;
 }
 .filterx button{
-    shadow: none;
     background-color: rgb(116, 104, 41) !important;
 }
 .filtersubmit{

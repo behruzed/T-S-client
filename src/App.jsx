@@ -31,7 +31,7 @@ function App() {
       <RouteSignIn />
       
       {/* Demo */}
-      {/* <Marqu/> */}
+      <Marqu/>
 
     </>
   )

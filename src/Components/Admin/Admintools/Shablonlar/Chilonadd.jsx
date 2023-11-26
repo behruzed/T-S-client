@@ -211,9 +211,10 @@ function Chilonadd() {
           </Breadcrumb>
           <div className="d-flex justify-content-between">
             <h1 className="h11">Созданные шаблоны</h1>
-            <button className="filter" variant="primary" onClick={() => setModalShow(true)}>
-            Фильтр <i className="fa-solid fa-filter"></i>
-      </button>
+          <Link to={"/chilon-filter"}>
+          <button className="filter" variant="primary">
+              Фильтр <i className="fa-solid fa-filter"></i>
+            </button></Link>
 
       <MyVerticallyCenteredModal
         show={modalShow}

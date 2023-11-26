@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import loading from "../../../../images/loading.gif";
 
 function MyVerticallyCenteredModal(props, data, th, spTeacherFunc, spTeacher) {
   const [malumot, setMalumot] = useState("");
@@ -31,10 +32,10 @@ function MyVerticallyCenteredModal(props, data, th, spTeacherFunc, spTeacher) {
     );
     setMalumot(data2.data.data);
   }
-
   const [category, setCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
   const handleSubmit = () => {
+
     localStorage.setItem("category", category);  
     localStorage.setItem("subcategory", subcategory);
     props.onHide();
@@ -44,6 +45,28 @@ useEffect(()=>{
 useEffect(()=>{
   getName1()
 })
+const anim = () => {
+  const filterAnimDivs = document.querySelectorAll('.filteranim');
+
+  filterAnimDivs.forEach((div) => {
+    div.style.display = 'block';
+    div.style.position = 'fixed'; // Ekran chetida qolib turishi uchun
+    div.style.top = '0';
+    div.style.left = '0';
+    div.style.width = '100%';
+    div.style.height = '100%';
+    div.style.backgroundColor = 'rgba(255, 255, 255, 0.521)'; // Oq rangda ekanligini ko'rsatadi
+    div.style.zIndex = '9999'; // Boshqa elementlardan ustunlik
+  });
+
+  setTimeout(() => {
+    filterAnimDivs.forEach((div) => {
+      div.style.display = 'none';
+    });
+  }, 2000);
+};
+
+
   return (
     <Modal
       {...props}
@@ -198,18 +221,26 @@ useEffect(()=>{
                     </select>
                   </div>
 
+
+
+
+                  {/* <div className="filteranim">
+          <img src={loading} className="text-center" alt="Loading gif" />
+        </div> */}
+        
       </Modal.Body>
       <Modal.Footer>
-        <button className="filtersubmit" onClick={() => {props.onHide(); handleSubmit(); getName1()}}>
+        <button className="filtersubmit" onClick={() => {props.onHide(); handleSubmit(); getName1(); anim()}}>
           Отправить
         </button>
       </Modal.Footer>
     </Modal>
+    
   );
 }
 
 function Filter({data, th, spTeacherFunc, spTeacher}) {
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = React.useState(true);
   const [malumot, setMalumot] = useState("");
 
   const getName1 = async (e, id) => {
@@ -237,9 +268,12 @@ function Filter({data, th, spTeacherFunc, spTeacher}) {
   })
 
 
-
   return (
     <>
+
+    <div className="filteranim">
+    <img src={loading} className="text-center" alt="Loading gif" />
+    </div>
       <div className="row mainrow">
         <div className="col-0 col-md-2"></div>
         <div className="chap col-0 col-md-2">
