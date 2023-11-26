@@ -1,13 +1,8 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import config from "../../../../../qwe/config"
-import DobavitChilonPos from "../DobavitChilonPos";
-import "../../../style.css";
-import Bdobavit from "../../../Admintools/Bdobavit"
-import addNotification from "react-push-notification";
-import logo from "../../../../../images/chilon-logo.ico";
-
-
+import config from "../../../../qwe/config";
+import Chilonpos from "./Chilonpos";
+import "../../style.css";
 
 const formatDate = (dateStr) => {
   const date = new Date(dateStr);
@@ -20,50 +15,31 @@ const formatDate = (dateStr) => {
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 export default ({ data, th, spTeacherFunc, spTeacher }) => {
-  const [showMessage, setShowMessage] = useState(false);
-  const handleButtonClick = () => {
-    setShowMessage(true);
-    
-    setTimeout(() => {
-      setShowMessage(false); 
-    }, 1000);
-  }
-  useEffect(() => {
-    if(showMessage) {
-      const timeout = setTimeout(() => {
-        setShowMessage(false);
-      }, 1000);
-  
-      return () => clearTimeout(timeout); 
-    }
-  }, [showMessage]);
   const getName1 = async (e, id) => {
-    let qwe = await spTeacherFunc(id)
-    window.localStorage.setItem("nom", qwe._id);
-    window.localStorage.setItem("forchildren", qwe.name);
-    window.localStorage.setItem("thattime", qwe.children);
-    let data1 = await axios.get(`${config.url}/pos/?parent=${window.localStorage.getItem("nom")}`,
-
-    {
-        headers: {
-          authorization: window.localStorage.getItem("token")
-        }
-      });
-    prof1()
-  };
-  const getName2 = async (e, id) => {
     let qwe = await spTeacherFunc(id);
-  
+    window.localStorage.setItem("nom", qwe._id);
     let data1 = await axios.get(
-      `${config.url}/addstatus/?forchildren=${window.localStorage.getItem("forchildren")}&parent=${window.localStorage.getItem("nom")}`,
+      `${config.url}/pos/?parent=${window.localStorage.getItem("nom")}`, 
+      {
+        headers: {
+          authorization: window.localStorage.getItem("token")  
+        }
+      }
+    );
+    let data2 = await axios.get(
+      `${config.url}/filter/?category=${window.localStorage.getItem("category")}&subcategory=${window.localStorage.getItem("subcategory")}`,
       {
         headers: {
           authorization: window.localStorage.getItem("token")
         }
       }
     );
-  };
-  
+    await prof1();
+  }
+
+
+
+
   const [edit, setEdit] = useState(false);
   const [prof, setProf] = useState(false);
   const [backdrop, setBackdrop] = useState(false);
@@ -163,12 +139,11 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
       position2: gcv(inp25).length === 0 ? undefined : gcv(inp25),
       parent: gcv(inp26).length === 0 ? undefined : gcv(inp26),
     };
-    let res = await axios.put(`${config.url}/aviatsion/${teacherId}`, data, {
+    let res = await axios.put(`${config.url}/filter/${teacherId}`, data, {
       headers: {
         authorization: window.localStorage.getItem("token"),
       },
     });
-    window.location.reload();
     // edit1()
     if (res.data.title === "Информация о продукте была изменена✅") {
       alert(res.data.title);
@@ -202,7 +177,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
     inp26.current.value = "";
   };
   const delTeacher = async (id) => {
-    let res = await axios.delete(`${config.url}/aviatsion/${id}`, {
+    let res = await axios.delete(`${config.url}/filter/${id}`, {
       headers: {
         authorization: window.localStorage.getItem("token"),
       },
@@ -210,7 +185,6 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
     if (res.data.title === "Продукт был удален❌") {
       alert(res.data.title);
     }
-    window.location.reload();
     // backdrop2()
 
   };
@@ -271,14 +245,16 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
         position2: gcv(inp25),
         parent: gcv(inp26),
       };
-      let res = await axios.post(`${config.url}/aviatsion`, data, {
+      let res = await axios.post(`${config.url}/filter`, data, {
         headers: {
           authorization: window.localStorage.getItem("token"),
         },
       });
-      // window.location.reload();
       backdrop2()
-      // backdrop2()
+      // prof1()
+      // setTimeout(() => {
+      //   setProf(true)
+      // }, 1000);
 
       if (res.data.title === "Продукт добавлен в систему✅") {
         alert(res.data.title);
@@ -315,47 +291,12 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
     }
   };
   const [category, setCategory] = useState("");
-  async function qwe(e, status) {
-    // backdrop2
-    
-    console.log(e);
-    let res = await axios.put(`${config.url}/addstatus/change`,
-      {
-        statusFrom: status,
-        status: "closed",
-        openedBy: window.localStorage.getItem("person"),
-        parName: ref1.current.value,
-        nom: window.localStorage.getItem("nom")
-      },
-      {
-        headers: {
-          authorization: window.localStorage.getItem("token"),
-        }
-      },)
-    console.log(res);
-  }
-  let ref1 = useRef()
-
-    const clickToNotify = ()=>{
-        addNotification({
-            title: "Sizga yangi xabar keldi",
-            message: "Ariza qoldirildi. Tasdiqlash uchun bosing...",
-            duration: 1000000,
-            icon: logo,
-            native: true,
-            onClick: ()=> window.location =  "/ochiq-arizalar"
-        })
-    }
-
-
-
+  useEffect(()=>{
+  })
   return (
     <>
-{showMessage && (
-  <div className="gggg">
-    Заявка отправлена
-  </div>
-)}
+      <h1 className="h10">{window.localStorage.getItem("category")} - {window.localStorage.getItem("subcategory")}</h1>
+
       <table className="table w-full text-sm text-left text-gray-500">
         <thead className="text-xs text-gray-700 text-gray-400 uppercase bg-gray-200">
           <tr>
@@ -378,7 +319,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
                   href="#"
                   className="post-medium text-lg text-blue-600 dark:text-blue-500 hover:underline"
                 >
-                  <button className="addposition">Отправить</button>
+                  <i className="fa-solid fa-square-plus"></i>
                 </a>
               </div>
               <span className="sr-only">Close modal</span>
@@ -386,7 +327,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
           </tr>
         </thead>
         <tbody className="wer">
-          {data.map((item, i) => {
+        {data && Array.isArray(data) && data.map((item, i) => {
             return (
               <tr
                 key={item._id}
@@ -394,31 +335,50 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
               >
                 <th
                   scope="row"
-                  className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap w-10 dark:text-white"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-10 dark:text-white"
                 >
                   {i + 1}
                 </th>
-                <td className="px-6 py-2">{item.name}</td>
-                <td className="px-6 py-2">{item.norma}</td>
-                <td className="px-6 py-2">{item.nameId}</td>
-                <td className="px-6 py-2 pluss2 text-right w-52">
-                  <a
-                    // onClick={prof1}
-                    // onClickCapture={() => {
-                    //   spTeacherFunc(item._id);
-                    // }}
+                <td className="px-6 py-4">{item.name}</td>
+                <td className="px-6 py-4">{item.group}</td>
+                <td className="px-6 py-4">{item.type}</td>
+                <td className="px-6 py-4">{item.norma}</td>
+                <td className="px-6 py-4">{item.nameId}</td>
+                <td className="px-6 py-4 pluss2 text-right w-52">
+                <a
                     onClick={(e) => {
                       getName1(e, item._id)
                     }}
                     data-modal-target="profile-modal"
                     data-modal-toggle="profile-modal"
                     href="#"
-                    className="font-medium mr-9 listclass text-blue-600 dark:text-blue-500 hover:underline"
+                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                   >
-                    <i className="fa-solid fa-list"></i>
+                    <i class="fa-solid fa-list"></i>
+                  </a>
+                  
+                  <a
+                    onClick={edit1}
+                    onClickCapture={() => {
+                      getId(item._id);
+                    }}
+                    data-modal-target="authentication-modal"
+                    data-modal-toggle="authentication-modal"
+                    href="#"
+                    className="ml-3 font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    <i className="fa-solid fa-pen"></i>
                   </a>
 
-
+                  <a
+                    onClick={() => {
+                      delTeacher(item._id);
+                    }}
+                    href="#"
+                    className="ml-3 font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                  </a>
                 </td>
               </tr>
             );
@@ -887,7 +847,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
               <button
                 onClick={prof1}
                 type="button"
-                className="absolute srr top-3 right-2.5 text-gray-500 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                className="absolute srr top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
                 data-modal-hide="profile-modal"
               >
                 <svg
@@ -912,8 +872,26 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
                     <table className="w-full">
                       <thead className="theadd">
                         <th className="theadd1">{spTeacher.name}</th>
+                        <th>
+                          Дата создания : {formatDate(spTeacher.createdAt)}
+                        </th>
                       </thead>
                     </table>
+                    <div className="pluss posta">
+                      <a
+                        onClick={backdrop2}
+                        data-modal-target="post-modal"
+                        data-modal-toggle="post-modal"
+                        href="#"
+                        className="post-medium text-lg text-blue-600 dark:text-blue-500 hover:underline"
+                      >
+                        {/* <i className="fa-solid fa-square-plus"></i> */}
+                        <button className="addposition">
+                          Добавить позиция
+                        </button>
+                        {/* {spTeacher._id} */}
+                      </a>
+                    </div>
 
                     {backdropp && (
                       <div
@@ -988,7 +966,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
                               </form>
                               <form className="flex items-center hidden gap-16 mb-5">
                                 <div className="w-full hidden">
-                                  <div className="col-12 mb-5 col-md-6">
+                                <div className="col-12 mb-5 col-md-6">
                                     <input
                                       ref={inp26}
                                       value={spTeacher._id}
@@ -1375,8 +1353,8 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
                         className="bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40"
                       ></div>
                     )}
-                    <DobavitChilonPos />
-
+                    <Chilonpos />
+                    
                     {/* <p className="mb-1 text-xl  text-gray-900 dark:text-white">
                       <strong>Название : </strong>
                       {spTeacher.name}
@@ -1419,7 +1397,7 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
           aria-modal="true"
           role="dialog"
         >
-          <div className="relative w-full max-h-full">
+          <div className="relative w-5/12 max-h-full">
             <div className="w-full relative bg-white rounded-lg shadow dark:bg-gray-700">
               <button
                 onClick={backdrop1}
@@ -1443,46 +1421,457 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
                 <span className="sr-only">Close modal</span>
               </button>
               <div className="w-full px-6 py-6 lg:px-8">
-                <form className="posta d-flex">
-                  <div className="pluss">
-                  <input
-                    type="text"
-                    id="simple-search"
-                    ref={ref1}
-                    // value={inp7.name}
-                    // defaultValue="spTeacher.name"
-                    className="mb-3 w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Номер партии"
-                    required="true"
-                  />
+                <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+                  Добавление продукт в систему
+                </h3>
+                <label htmlFor="simple-search" className="sr-only">
+                  Ism
+                </label>
+                <form className="items-center gap-16 mb-5">
+                  <label htmlFor="simple-search" className="sr-only">
+                    Ism
+                  </label>
+                  <div className="w-full text-center">
+                    <select
+                      ref={inp11}
+                      id="simple-search"
+                      className="custom-select opt shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md"
+                      aria-label=".form-select-lg example"
+                      required=""
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                    >
+                      <option value="" disabled>
+                        Вид...
+                      </option>
+                      <option value="Масла">Масла</option>
+                      <option value="Смазки">Смазки</option>
+                      <option value="Другие продукты">Другие продукты</option>
+                      <option value="Образцы">Образцы</option>
+                    </select>
+
+                    <select
+                      ref={inp10}
+                      id="simple-search"
+                      className="custom-select opt shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md"
+                      aria-label=".form-select-lg example"
+                      required=""
+                    >
+                      {/* <option>Категория...</option> */}
+
+                      {category === "Масла" && (
+                        <>
+                          <option
+                            className="soption soptionmoy"
+                            value="Авиационные масла"
+                          >
+                            Авиационные масла
+                          </option>
+                          <option
+                            className="soption soptionmoy"
+                            value="Гидравлические масла"
+                          >
+                            Гидравлические масла
+                          </option>
+                          <option
+                            className="soption soptionmoy"
+                            value="Компрессорные масла"
+                          >
+                            Компрессорные масла
+                          </option>
+                          <option
+                            className="soption soptionmoy"
+                            value="Моторные масла"
+                          >
+                            Моторные масла
+                          </option>
+                          <option
+                            className="soption soptionmoy"
+                            value="Редукторные масла"
+                          >
+                            Редукторные масла
+                          </option>
+                          <option
+                            className="soption soptionmoy"
+                            value="Трансмиссионные масла"
+                          >
+                            Трансмиссионные масла
+                          </option>
+                          <option
+                            className="soption soptionmoy"
+                            value="Трансформаторные масла"
+                          >
+                            Трансформаторные масла
+                          </option>
+                          <option
+                            className="soption soptionmoy"
+                            value="Турбинные масла"
+                          >
+                            Турбинные масла
+                          </option>
+                        </>
+                      )}
+
+                      {category === "Смазки" && (
+                        <>
+                          <option
+                            className="soption soptionsmazki"
+                            value="Железнодорожные смазки"
+                          >
+                            Железнодорожные смазки
+                          </option>
+                          <option
+                            className="soption soptionsmazki"
+                            value="Смазки общего назначения"
+                          >
+                            Смазки общего назначения
+                          </option>
+                          <option
+                            className="soption soptionsmazki"
+                            value="Спец. смазки"
+                          >
+                            Спец. смазки
+                          </option>
+                        </>
+                      )}
+
+                      {category === "Другие продукты" && (
+                        <>
+                          <option
+                            value="Другие продукты"
+                            className="soptionboshqa"
+                          >
+                            Другие продукты
+                          </option>
+                        </>
+                      )}
+
+                      {category === "Образцы" && (
+                        <>
+                          <option value="Образцы" className="soptionnamuna">
+                            Образцы
+                          </option>
+                        </>
+                      )}
+                    </select>
                   </div>
-                  <a
-  onClick={(e) => {
-    e.preventDefault();
-    const inputValue = ref1.current.value.trim();
-    if (inputValue !== "") {
-      qwe(e, "opened");
-      handleButtonClick();
-      backdrop1();
-      clickToNotify();
-    } else {
-      alert("Введите номер партии...");
-    }
-  }}
-                    data-modal-target="post-modal"
-                    data-modal-toggle="post-modal"
-                    href="#"
-                    className="post-medium text-lg text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    {/* <i className="fa-solid fa-square-plus"></i> */}
-                    <button onClick={() => {
-  }} className="addposition">
-                      Подвердить3
-                    </button>
-                    {/* {spTeacher._id} */}
-                  </a>
+                  <div className="w-full">
+                    <input
+                      ref={inp7}
+                      type="text"
+                      id="simple-search"
+                      className="mx-auto mb-3 w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Название"
+                      required=""
+                    />
+                  </div>
+                  <div className="w-full text-center ml-1 row d-flex justify-between mb-5">
+                    <div className="col-12 col-md-4">
+                      <input
+                        ref={inp8}
+                        type="text"
+                        id="simple-search"
+                        className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Ид номер"
+                        required=""
+                      />
+                    </div>
+                    <div className="col-12 mb-5 col-md-8">
+                      <input
+                        ref={inp9}
+                        type="text"
+                        id="simple-search"
+                        className="mx-auto w-full innnn max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="№ Н/Д"
+                        required=""
+                      />
+                    </div>
+                  </div>
                 </form>
-                <Bdobavit />
+                <form className="flex items-center hidden gap-16 mb-5">
+                  <div className="w-full">
+                    <select
+                      ref={inp12}
+                      id="simple-search"
+                      className="shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                      aria-label=".form-select-lg example"
+                      required=""
+                    >
+                      <option className="soption" value="none">
+                        Tanlang...
+                      </option>
+                      <option className="soption" value="Proizvodstvo xodimi">
+                        Proizvodstvo xodimi
+                      </option>
+                      <option className="soption" value="Laboratoriya xodimi">
+                        Laboratoriya xodimi
+                      </option>
+                    </select>
+                    <select
+                      ref={inp13}
+                      id="simple-search"
+                      className="shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                      aria-label=".form-select-lg example"
+                      required=""
+                    >
+                      <option className="soption" value="none">
+                        Tanlang...
+                      </option>
+                      <option className="soption" value="Proizvodstvo xodimi">
+                        Proizvodstvo xodimi
+                      </option>
+                      <option className="soption" value="Laboratoriya xodimi">
+                        Laboratoriya xodimi
+                      </option>
+                    </select>
+                    <select
+                      ref={inp14}
+                      id="simple-search"
+                      className="shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                      aria-label=".form-select-lg example"
+                      required=""
+                    >
+                      <option className="soption" value="none">
+                        Tanlang...
+                      </option>
+                      <option className="soption" value="Proizvodstvo xodimi">
+                        Proizvodstvo xodimi
+                      </option>
+                      <option className="soption" value="Laboratoriya xodimi">
+                        Laboratoriya xodimi
+                      </option>
+                    </select>
+                    <select
+                      ref={inp15}
+                      id="simple-search"
+                      className="shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                      aria-label=".form-select-lg example"
+                      required=""
+                    >
+                      <option className="soption" value="none">
+                        Tanlang...
+                      </option>
+                      <option className="soption" value="Proizvodstvo xodimi">
+                        Proizvodstvo xodimi
+                      </option>
+                      <option className="soption" value="Laboratoriya xodimi">
+                        Laboratoriya xodimi
+                      </option>
+                    </select>
+                    <select
+                      ref={inp16}
+                      id="simple-search"
+                      className="shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                      aria-label=".form-select-lg example"
+                      required=""
+                    >
+                      <option className="soption" value="aaa">
+                        Tanlang...
+                      </option>
+                      <option className="soption" value="Proizvodstvo xodimi">
+                        Proizvodstvo xodimi
+                      </option>
+                      <option className="soption" value="Laboratoriya xodimi">
+                        Laboratoriya xodimi
+                      </option>
+                    </select>
+                    <select
+                      ref={inp17}
+                      id="simple-search"
+                      className="shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                      aria-label=".form-select-lg example"
+                      required=""
+                    >
+                      <option className="soption" value="none">
+                        Tanlang...
+                      </option>
+                      <option className="soption" value="Proizvodstvo xodimi">
+                        Proizvodstvo xodimi
+                      </option>
+                      <option className="soption" value="Laboratoriya xodimi">
+                        Laboratoriya xodimi
+                      </option>
+                    </select>
+                    <select
+                      ref={inp18}
+                      id="simple-search"
+                      className="shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                      aria-label=".form-select-lg example"
+                      required=""
+                    >
+                      <option className="soption" value="none">
+                        Tanlang...
+                      </option>
+                      <option className="soption" value="Proizvodstvo xodimi">
+                        Proizvodstvo xodimi
+                      </option>
+                      <option className="soption" value="Laboratoriya xodimi">
+                        Laboratoriya xodimi
+                      </option>
+                    </select>
+                    <select
+                      ref={inp19}
+                      id="simple-search"
+                      className="shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                      aria-label=".form-select-lg example"
+                      required=""
+                    >
+                      <option className="soption" value="none">
+                        Tanlang...
+                      </option>
+                      <option className="soption" value="Proizvodstvo xodimi">
+                        Proizvodstvo xodimi
+                      </option>
+                      <option className="soption" value="Laboratoriya xodimi">
+                        Laboratoriya xodimi
+                      </option>
+                    </select>
+                    <select
+                      ref={inp20}
+                      id="simple-search"
+                      className="shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                      aria-label=".form-select-lg example"
+                      required=""
+                    >
+                      <option className="soption" value="none">
+                        Tanlang...
+                      </option>
+                      <option className="soption" value="Proizvodstvo xodimi">
+                        Proizvodstvo xodimi
+                      </option>
+                      <option className="soption" value="Laboratoriya xodimi">
+                        Laboratoriya xodimi
+                      </option>
+                    </select>
+                    <select
+                      ref={inp21}
+                      id="simple-search"
+                      className="shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                      aria-label=".form-select-lg example"
+                      required=""
+                    >
+                      <option className="soption" value="none">
+                        Tanlang...
+                      </option>
+                      <option className="soption" value="Proizvodstvo xodimi">
+                        Proizvodstvo xodimi
+                      </option>
+                      <option className="soption" value="Laboratoriya xodimi">
+                        Laboratoriya xodimi
+                      </option>
+                    </select>
+                    <select
+                      ref={inp22}
+                      id="simple-search"
+                      className="shadow-none form-select form-select-lg mb-3 mx-auto w-full max-w-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                      aria-label=".form-select-lg example"
+                      required=""
+                    >
+                      <option className="soption" value="none">
+                        Tanlang...
+                      </option>
+                      <option className="soption" value="Proizvodstvo xodimi">
+                        Proizvodstvo xodimi
+                      </option>
+                      <option className="soption" value="Laboratoriya xodimi">
+                        Laboratoriya xodimi
+                      </option>
+                    </select>
+                  </div>
+                  <div className="w-full hidden">
+                    <select
+                      ref={inp1}
+                      id="simple-search"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required=""
+                    >
+                      <option value="ism">Xodim</option>
+                    </select>
+                    <select
+                      ref={inp2}
+                      id="simple-search"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required=""
+                    >
+                      <option value="fam">Xodim</option>
+                    </select>
+                    <select
+                      ref={inp3}
+                      id="simple-search"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required=""
+                    >
+                      <option value="log">Xodim</option>
+                    </select>
+                    <select
+                      ref={inp4}
+                      id="simple-search"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required=""
+                    >
+                      <option value="element">element</option>
+                    </select>
+                    <select
+                      ref={inp5}
+                      id="simple-search"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required=""
+                    >
+                      <option value="created">Xodim</option>
+                    </select>
+                    <select
+                      ref={inp6}
+                      id="simple-search"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required=""
+                    >
+                      <option value="pass">Xodim</option>
+                    </select>
+                    <select
+                      ref={inp23}
+                      id="simple-search"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required=""
+                    >
+                      <option value="chilon">Xodim</option>
+                    </select>
+                    <select
+                      ref={inp24}
+                      id="simple-search"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required=""
+                    >
+                      <option value="none">Xodim</option>
+                    </select>
+                    <select
+                      ref={inp25}
+                      id="simple-search"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required=""
+                    >
+                      <option value="none">Xodim</option>
+                    </select>
+                    <select
+                      ref={inp26}
+                      id="simple-search"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      required=""
+                    >
+                      <option value="nonee">nonee</option>
+                    </select>
+                  </div>
+                </form>
+
+                <div className="forBtn">
+                  <button
+                    onClick={addTeacher}
+                    type="button"
+                    id="simple-search"
+                    className="buttun"
+                  >
+                    Отправить
+                  </button>
+                </div>
               </div>
             </div>
           </div>

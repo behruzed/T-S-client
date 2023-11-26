@@ -82,6 +82,10 @@
     font-size: 2.5rem !important;
     margin-top: 5px;
     margin-left: 8px;
+}.h22{
+    font-size: 1.5rem !important;
+    margin-top: 5px;
+    margin-left: 8px;
 }
 .moyul{
     margin: 20px;
@@ -149,7 +153,34 @@ box-shadow:  -1px 1px 5px gray;
     transform: translate(-3px, 3px);
 }
 
-
+.filter{
+    background-color: #1C64F2;
+    color: #fff;
+    border-radius: 10px;
+    margin-bottom: -20px;
+    margin: 10px;
+    padding: 15px;
+    transition: .1s;
+}
+.filter:hover{
+    background-color: #4983f7;
+}
+.filterx button{
+    shadow: none;
+    background-color: rgb(116, 104, 41) !important;
+}
+.filtersubmit{
+    background-color: #1C64F2;
+    color: #fff;
+    border-radius: 10px;
+    margin-bottom: -20px;
+    margin: 10px;
+    padding: 15px;
+    transition: .1s;
+}
+.filtersubmit:hover{
+    background-color: #4983f7;
+}
 .chap {
     overflow-y: auto;
     overflow-x: hidden;

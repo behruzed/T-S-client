@@ -17,7 +17,7 @@ function App() {
   return (
     <> 
       <RouteAdmin />
-      <Notificationtest/>
+      {/* <Notificationtest/> */}
       {/* <RouteLab/>
       <RouteLabNach/>
       <RoutePr/>

@@ -279,8 +279,6 @@ export default ({ data, th, spTeacherFunc, spTeacher }) => {
   };
   const [category, setCategory] = useState("");
   useEffect(()=>{
-    // editTeacher()
-    // delTeacher()
   })
   return (
     <>

@@ -23,6 +23,7 @@ import Chilonnamuna from "../../Components/Admin/Admintools/Shablonlar/Chilonnam
 
 import Chilonadd from "../../Components/Admin/Admintools/Shablonlar/Chilonadd";
 import Chilonothers from "../../Components/Admin/Admintools/Shablonlar/Chilonothers";
+import Filter from "../../Components/Admin/Admintools/Shablonlar/Filter";
 
 import Info from "../../Components/Admin/Admintools/Info";
 import Eskiadmin from "../../Components/Admin/Eskiadmin";
@@ -117,6 +118,7 @@ function RouteAdmin() {
         <Route element={<Chilonnamuna />} path="/chilon-namunalar"></Route>
         <Route element={<Chilonadd />} path="/chilon-add"></Route>
         <Route element={<Chilonothers />} path="/chilon-add878"></Route>
+        <Route element={<Filter />} path="/chilon-filter"></Route>
 
           {/* Masla */}
         <Route element={<Aviatsion />} path="/chilon-moy-aviatsion"></Route>
