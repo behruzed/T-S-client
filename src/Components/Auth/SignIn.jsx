@@ -165,7 +165,7 @@ function SignIn() {
               </div>
             </div>
           </div>
-            <a target="_blank" href="https://t.me/WmwasatmiamariawM">
+            <a target="_blank" href="https://behruzed.uz">
               <div className="createdbywasad">
                 <h5>Created by behruzed.uz</h5>
 {/*                 <img src={wasat} alt="Wasat group logo" /> */}
